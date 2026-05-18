@@ -33,7 +33,6 @@ jobs:
         run: npm run build
         env:
           SKIP_VERIFY_EXPORT: "1"
-          BASE_PATH: "/dvizh"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

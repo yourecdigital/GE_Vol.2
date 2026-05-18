@@ -11,22 +11,28 @@ export function CustomCursor() {
     const ring = ringRef.current;
     if (!cur || !ring) return;
 
-    let mx = 0, my = 0, rx = 0, ry = 0;
+    let mx = -100, my = -100;
+    let rx = -100, ry = -100;
     let raf: number;
+    let moved = false;
 
     function onMove(e: MouseEvent) {
       mx = e.clientX;
       my = e.clientY;
+      if (!moved) {
+        moved = true;
+        cur!.style.opacity = "1";
+        ring!.style.opacity = "1";
+      }
     }
 
-    function animate() {
-      cur!.style.left = mx + "px";
-      cur!.style.top = my + "px";
-      rx += (mx - rx) * 0.12;
-      ry += (my - ry) * 0.12;
-      ring!.style.left = rx + "px";
-      ring!.style.top = ry + "px";
-      raf = requestAnimationFrame(animate);
+    function tick() {
+      // transform3d triggers compositor — no layout, no paint
+      cur!.style.transform = `translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;
+      rx += (mx - rx) * 0.14;
+      ry += (my - ry) * 0.14;
+      ring!.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`;
+      raf = requestAnimationFrame(tick);
     }
 
     function onEnter() {
@@ -42,10 +48,10 @@ export function CustomCursor() {
       ring!.style.height = "40px";
     }
 
-    document.addEventListener("mousemove", onMove);
-    animate();
+    document.addEventListener("mousemove", onMove, { passive: true });
+    raf = requestAnimationFrame(tick);
 
-    const targets = document.querySelectorAll("a, button, .service-card, .review-card, .camp-detail");
+    const targets = document.querySelectorAll("a,button,.service-card,.review-card,.org-card,.event-card,.venue-card,.session-card");
     targets.forEach((el) => {
       el.addEventListener("mouseenter", onEnter);
       el.addEventListener("mouseleave", onLeave);
@@ -63,8 +69,8 @@ export function CustomCursor() {
 
   return (
     <>
-      <div ref={curRef} className="cursor" />
-      <div ref={ringRef} className="cursor-ring" />
+      <div ref={curRef} className="cursor" style={{ opacity: 0 }} />
+      <div ref={ringRef} className="cursor-ring" style={{ opacity: 0 }} />
     </>
   );
 }

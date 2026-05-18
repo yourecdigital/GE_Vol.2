@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЮРА МАКСИМОВ — ДВИЖ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;500;600;700&family=Caveat:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --black: #070707;
+  --white: #f5f0eb;
+  --orange: #FF5200;
+  --orange-dim: #cc4200;
+  --gray: #888;
+  --gray-dim: #333;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: auto; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Oswald', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CURSOR ─────────────────────────────────────────── */
+.cursor {
+  width: 12px; height: 12px;
+  background: var(--orange);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.08s, width 0.2s, height 0.2s, background 0.2s;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  width: 40px; height: 40px;
+  border: 1px solid rgba(255,82,0,0.5);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s cubic-bezier(.25,.46,.45,.94), width 0.3s, height 0.3s;
+}
+body:hover .cursor { opacity: 1; }
+
+/* ── GRAIN ───────────────────────────────────────────── */
+.grain {
+  position: fixed;
+  inset: -50%;
+  width: 200%; height: 200%;
+  pointer-events: none;
+  z-index: 9000;
+  opacity: 0.035;
+  animation: grain-move 0.4s steps(1) infinite;
+}
+@keyframes grain-move {
+  0%  { transform: translate(0,0); }
+  10% { transform: translate(-2%,-3%); }
+  20% { transform: translate(3%,1%); }
+  30% { transform: translate(-1%,4%); }
+  40% { transform: translate(4%,-2%); }
+  50% { transform: translate(-3%,3%); }
+  60% { transform: translate(2%,-4%); }
+  70% { transform: translate(-4%,1%); }
+  80% { transform: translate(3%,4%); }
+  90% { transform: translate(-2%,-1%); }
+  100%{ transform: translate(1%,2%); }
+}
+
+/* ── SECTION BASE ─────────────────────────────────────── */
+section { position: relative; overflow: hidden; }
+
+/* ── NAV ─────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 3rem;
+  mix-blend-mode: difference;
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.15em;
+  color: var(--white);
+}
+.nav-logo span { color: var(--orange); font-family: 'Caveat', cursive; }
+.nav-cta {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--white);
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 0.5rem 1.2rem;
+  transition: all 0.3s;
+}
+.nav-cta:hover { border-color: var(--orange); color: var(--orange); }
+
+/* ── HERO ─────────────────────────────────────────────── */
+#hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 clamp(1.5rem, 5vw, 5rem) clamp(3rem, 6vh, 5rem);
+  background: var(--black);
+  overflow: visible;
+}
+
+.hero-meta {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--gray);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 3rem;
+  opacity: 0;
+}
+.hero-meta span { color: var(--orange); }
+
+.hero-headline {
+  line-height: 0.88;
+  position: relative;
+}
+.hero-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 13vw, 16rem);
+  letter-spacing: -0.02em;
+  color: var(--white);
+  display: block;
+  transform: translateY(110%);
+}
+.hero-name-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.04em;
+  overflow: hidden;
+}
+.hero-dvizh {
+  display: block;
+  transform: translateY(110%);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: clamp(6rem, 15vw, 17rem);
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 40px rgba(255,82,0,0.35));
+}
+
+.hero-sub {
+  margin-top: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  opacity: 0;
+}
+.hero-desc {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(0.85rem, 1.5vw, 1.2rem);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+  text-transform: uppercase;
+  max-width: 28ch;
+  line-height: 1.6;
+}
+.hero-scroll-hint {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  color: var(--gray);
+}
+.scroll-line {
+  width: 1px;
+  height: 3rem;
+  background: linear-gradient(to bottom, var(--orange), transparent);
+  animation: scroll-pulse 2s ease-in-out infinite;
+}
+@keyframes scroll-pulse {
+  0%, 100% { transform: scaleY(1); opacity: 1; }
+  50% { transform: scaleY(0.6); opacity: 0.4; }
+}
+
+.hero-count {
+  position: absolute;
+  bottom: clamp(3rem, 6vh, 5rem);
+  right: clamp(1.5rem, 5vw, 5rem);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--gray-dim);
+  letter-spacing: 0.15em;
+  opacity: 0;
+}
+.hero-count em { color: var(--orange); font-style: normal; }
+
+/* ── TICKER ─────────────────────────────────────────── */
+.ticker-wrap {
+  background: var(--orange);
+  padding: 0.75rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ticker-inner {
+  display: inline-flex;
+  animation: ticker 20s linear infinite;
+}
+.ticker-item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  color: var(--black);
+  padding: 0 2rem;
+}
+.ticker-sep { color: var(--black); opacity: 0.4; padding: 0 0.5rem; }
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── MANIFESTO ─────────────────────────────────────────── */
+#manifesto {
+  padding: clamp(5rem, 12vw, 12rem) clamp(1.5rem, 5vw, 5rem);
+  background: var(--black);
+}
+.manifesto-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 3rem;
+  opacity: 0;
+  transform: translateX(-20px);
+}
+.manifesto-lines { overflow: hidden; }
+.manifesto-line {
+  display: flex;
+  align-items: baseline;
+  overflow: hidden;
+}
+.manifesto-big {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 9vw, 10rem);
+  letter-spacing: -0.01em;
+  line-height: 0.9;
+  color: var(--white);
+  transform: translateY(110%);
+  display: block;
+}
+.manifesto-strike {
+  color: var(--gray-dim);
+  text-decoration: line-through;
+  text-decoration-color: var(--orange);
+}
+.manifesto-state {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: clamp(3rem, 8vw, 9rem);
+  color: var(--orange);
+  transform: translateY(110%);
+  display: block;
+  line-height: 1;
+}
+.manifesto-body {
+  margin-top: 4rem;
+  max-width: 50ch;
+  font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--gray);
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ── STATS ─────────────────────────────────────────── */
+#stats {
+  padding: clamp(5rem, 10vw, 10rem) clamp(1.5rem, 5vw, 5rem);
+  background: #0d0d0d;
+}
+.stats-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 4rem;
+  opacity: 0;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 3rem 2rem;
+}
+.stat-item {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 9vw, 9rem);
+  color: var(--white);
+  line-height: 1;
+  display: block;
+}
+.stat-num.orange { color: var(--orange); }
+.stat-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-top: 0.5rem;
+  display: block;
+}
+.stat-sub {
+  font-size: 0.7rem;
+  color: var(--gray-dim);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  margin-top: 0.25rem;
+}
+
+/* ── TIMELINE ─────────────────────────────────────────── */
+#timeline {
+  padding: clamp(5rem, 10vw, 10rem) clamp(1.5rem, 5vw, 5rem);
+  background: var(--black);
+}
+.timeline-header {
+  margin-bottom: 5rem;
+}
+.timeline-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+}
+.timeline-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 7vw, 7rem);
+  line-height: 0.9;
+  overflow: hidden;
+}
+.timeline-title span {
+  display: block;
+  transform: translateY(110%);
+}
+.timeline-title .accent { color: var(--orange); font-family: 'Caveat', cursive; font-size: 0.65em; }
+
+.timeline-items { display: grid; gap: 0; }
+.timeline-item {
+  display: grid;
+  grid-template-columns: 12rem 1fr;
+  gap: 2rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--gray-dim);
+  align-items: start;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.timeline-item:last-child { border-bottom: 1px solid var(--gray-dim); }
+.timeline-year {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  color: var(--orange);
+  line-height: 1;
+}
+.timeline-content {}
+.timeline-event {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+.timeline-desc {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--gray);
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}
+
+/* ── SERVICES ─────────────────────────────────────────── */
+#services {
+  padding: clamp(5rem, 10vw, 10rem) clamp(1.5rem, 5vw, 5rem);
+  background: #0d0d0d;
+}
+.services-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+}
+.services-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 9rem);
+  line-height: 0.9;
+  margin-bottom: 5rem;
+  overflow: hidden;
+}
+.services-title span { display: block; transform: translateY(110%); }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+.service-card {
+  border: 1px solid var(--gray-dim);
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.service-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(.25,.46,.45,.94);
+}
+.service-card:hover { border-color: var(--orange); }
+.service-card:hover::before { transform: scaleX(1); }
+.service-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--orange);
+  letter-spacing: 0.2em;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+.service-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  margin-bottom: 0.3rem;
+  line-height: 1;
+}
+.service-sub {
+  font-family: 'Caveat', cursive;
+  font-size: 1.3rem;
+  color: var(--orange);
+  margin-bottom: 1.5rem;
+}
+.service-desc {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--gray);
+  letter-spacing: 0.05em;
+  line-height: 1.7;
+}
+
+/* ── TOUR ─────────────────────────────────────────── */
+#tour {
+  padding: clamp(5rem, 10vw, 10rem) clamp(1.5rem, 5vw, 5rem);
+  background: var(--black);
+}
+.tour-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+}
+.tour-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 4rem;
+  flex-wrap: wrap;
+}
+.tour-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 10vw, 11rem);
+  line-height: 0.85;
+  overflow: hidden;
+}
+.tour-title span { display: block; transform: translateY(110%); }
+.tour-title .script { font-family: 'Caveat', cursive; font-size: 0.7em; color: var(--orange); }
+.tour-meta {
+  text-align: right;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--gray);
+  line-height: 2;
+}
+.tour-meta strong { color: var(--orange); display: block; font-size: 1.5rem; font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.1em; }
+
+.tour-dates { display: grid; gap: 0; }
+.tour-date {
+  display: grid;
+  grid-template-columns: 7rem 1fr auto;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--gray-dim);
+  align-items: center;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: background 0.2s;
+}
+.tour-date:last-child { border-bottom: 1px solid var(--gray-dim); }
+.tour-date:hover { background: rgba(255,82,0,0.04); }
+.tour-date.final .date-num { color: var(--orange); }
+.tour-date.final .date-loc { color: var(--orange); }
+.date-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  color: var(--white);
+  letter-spacing: 0.05em;
+}
+.date-loc {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--white);
+}
+.date-note {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--gray);
+  letter-spacing: 0.1em;
+  text-align: right;
+}
+.date-star {
+  color: var(--orange);
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+}
+
+/* ── QUOTE ─────────────────────────────────────────── */
+#quote {
+  background: var(--orange);
+  padding: clamp(5rem, 12vw, 12rem) clamp(1.5rem, 5vw, 5rem);
+  overflow: hidden;
+}
+.quote-inner { max-width: 1200px; }
+.quote-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.5);
+  margin-bottom: 2rem;
+  opacity: 0;
+}
+.quote-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 10vw, 11rem);
+  line-height: 0.9;
+  color: var(--black);
+  overflow: hidden;
+}
+.quote-text span { display: block; transform: translateY(110%); }
+.quote-text .handwritten {
+  font-family: 'Caveat', cursive;
+  font-size: 0.65em;
+  color: var(--black);
+  opacity: 0.7;
+}
+.quote-sig {
+  margin-top: 3rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: rgba(0,0,0,0.6);
+  text-transform: uppercase;
+  opacity: 0;
+}
+
+/* ── REVIEWS ─────────────────────────────────────────── */
+#reviews {
+  padding: clamp(5rem, 10vw, 10rem) clamp(1.5rem, 5vw, 5rem);
+  background: var(--black);
+}
+.reviews-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+}
+.reviews-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 7vw, 7.5rem);
+  line-height: 0.9;
+  margin-bottom: 5rem;
+  overflow: hidden;
+}
+.reviews-title span { display: block; transform: translateY(110%); }
+.reviews-title .orange { color: var(--orange); }
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+.review-card {
+  padding: 2.5rem;
+  border: 1px solid var(--gray-dim);
+  position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.review-quote-mark {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem;
+  color: var(--orange);
+  line-height: 0.6;
+  margin-bottom: 1rem;
+  display: block;
+}
+.review-text {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--white);
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+.review-author {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.review-name {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--orange);
+  text-transform: uppercase;
+}
+.review-meta {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--gray-dim);
+  text-transform: uppercase;
+}
+
+/* ── CAMP BLOCK ─────────────────────────────────────────── */
+#camp {
+  padding: clamp(5rem, 10vw, 10rem) clamp(1.5rem, 5vw, 5rem);
+  background: #0d0d0d;
+}
+.camp-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .camp-inner { grid-template-columns: 1fr; gap: 3rem; }
+}
+.camp-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 2rem;
+  opacity: 0;
+}
+.camp-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 8vw, 8rem);
+  line-height: 0.9;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.camp-title span { display: block; transform: translateY(110%); }
+.camp-script {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: clamp(3rem, 6vw, 6rem);
+  color: var(--orange);
+  display: block;
+  transform: translateY(110%);
+}
+.camp-desc {
+  font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--gray);
+  letter-spacing: 0.05em;
+  opacity: 0;
+  margin-top: 2rem;
+}
+.camp-details {
+  display: grid;
+  gap: 1rem;
+  opacity: 0;
+}
+.camp-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  border: 1px solid var(--gray-dim);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.camp-detail .key { color: var(--gray); }
+.camp-detail .val { color: var(--white); }
+.camp-detail .val.accent { color: var(--orange); }
+
+/* ── CONTACT ─────────────────────────────────────────── */
+#contact {
+  padding: clamp(6rem, 15vw, 15rem) clamp(1.5rem, 5vw, 5rem);
+  background: var(--black);
+  text-align: center;
+}
+.contact-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 2rem;
+  opacity: 0;
+}
+.contact-big {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 10vw, 12rem);
+  line-height: 0.85;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+.contact-big span { display: block; transform: translateY(110%); }
+.contact-script {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: clamp(2.5rem, 8vw, 9rem);
+  color: var(--orange);
+  overflow: hidden;
+  margin-bottom: 3rem;
+}
+.contact-script span { display: block; transform: translateY(110%); }
+.contact-handle {
+  display: inline-block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 4rem);
+  letter-spacing: 0.1em;
+  color: var(--white);
+  text-decoration: none;
+  border-bottom: 3px solid var(--orange);
+  padding-bottom: 0.2rem;
+  transition: color 0.3s;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.contact-handle:hover { color: var(--orange); }
+.contact-meta {
+  margin-top: 3rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--gray-dim);
+  text-transform: uppercase;
+  line-height: 2;
+  opacity: 0;
+}
+.contact-meta strong { color: var(--gray); }
+
+/* ── FOOTER ─────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--gray-dim);
+  padding: 2rem clamp(1.5rem, 5vw, 5rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.footer-copy {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--gray-dim);
+  text-transform: uppercase;
+}
+.footer-legal {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--gray-dim);
+  max-width: 50ch;
+  text-align: right;
+  line-height: 1.6;
+}
+
+/* ── UTILS ─────────────────────────────────────────── */
+.clip-hidden { overflow: hidden; }
+@media (max-width: 768px) {
+  .tour-date { grid-template-columns: 5rem 1fr; }
+  .date-note { display: none; }
+  .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+  nav { padding: 1.2rem 1.5rem; }
+}
+
+/* ── PROGRESS BAR ─────────────────────────────────────── */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--orange);
+  z-index: 9998;
+  transition: width 0.1s;
+}
+</style>
+</head>
+<body>
+
+<!-- GRAIN OVERLAY -->
+<canvas class="grain" id="grain"></canvas>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- PROGRESS -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ДВИЖ<span>!</span></div>
+  <a href="#contact" class="nav-cta">ПИШИ В ЛИЧКУ</a>
+</nav>
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<section id="hero">
+  <div class="hero-meta" id="heroMeta">
+    <span>01 / 21</span>
+    <span>САНКТ-ПЕТЕРБУРГ</span>
+    <span>2012 — ∞</span>
+    <span>V.3 // 2026</span>
+  </div>
+
+  <div class="hero-headline">
+    <div class="hero-name-row">
+      <span class="hero-name" id="heroName1">ЮРА</span>
+    </div>
+    <div class="hero-name-row">
+      <span class="hero-name" id="heroName2">МАКСИМОВ</span>
+      <img src="/dvizh-logo.png" class="hero-dvizh" id="heroDvizh" alt="движ!">
+    </div>
+  </div>
+
+  <div class="hero-sub" id="heroSub">
+    <p class="hero-desc">ОТЕЦ ДВИЖА · FOUNDER OF DVIZH<br>@XXIBRO · С 2012 — ПОДНИМАЮ РАЙОН В ГОРОДЕ И ТАМ, КУДА ПРИЕХАЛ</p>
+    <div class="hero-scroll-hint">
+      <div class="scroll-line"></div>
+      <span>СКРОЛЛ</span>
+    </div>
+  </div>
+
+  <div class="hero-count" id="heroCount">
+    <em>2417</em> ТУСОВОК ЗА 14 ЛЕТ
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner" id="ticker">
+    <span class="ticker-item">ДВИЖ — ЭТО СОСТОЯНИЕ</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">БЕЗ БИЛЕТОВ</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">БЕЗ АФИШ</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">ПО ЛЮБВИ</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">СВОИХ НЕ БРОСАЕМ</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">@XXIBRO</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">САНКТ-ПЕТЕРБУРГ 2026</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">СЕЗОН XII</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">ДВИЖ — ЭТО СОСТОЯНИЕ</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">БЕЗ БИЛЕТОВ</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">БЕЗ АФИШ</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">ПО ЛЮБВИ</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">СВОИХ НЕ БРОСАЕМ</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">@XXIBRO</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">САНКТ-ПЕТЕРБУРГ 2026</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">СЕЗОН XII</span><span class="ticker-sep">·</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ MANIFESTO ═══════════════════════════════ -->
+<section id="manifesto">
+  <p class="manifesto-label" id="mLabel">// 04 / 21 — МАНИФЕСТ</p>
+  <div class="manifesto-lines">
+    <div class="manifesto-line"><span class="manifesto-big" id="m1">ДВИЖ — ЭТО</span></div>
+    <div class="manifesto-line"><span class="manifesto-big manifesto-strike" id="m2">НЕ КЛУБ.</span></div>
+    <div class="manifesto-line"><span class="manifesto-big manifesto-strike" id="m3">НЕ ТУСА.</span></div>
+    <div class="manifesto-line"><span class="manifesto-big manifesto-strike" id="m4">НЕ ДВИЖЕНИЕ.</span></div>
+    <div class="manifesto-line"><span class="manifesto-state" id="m5">это состояние,</span></div>
+  </div>
+  <p class="manifesto-body" id="manifestoBody">
+    В котором собрался район, и всё, что не движ — отъехало в фон.
+    Это не тусовка и не клуб. Ты просто знаешь, что сюда идти.
+    Без афиш. По любви.
+  </p>
+</section>
+
+<!-- ═══════════════════════════════ STATS ═══════════════════════════════ -->
+<section id="stats">
+  <p class="stats-label" id="statsLabel">// 12 / 21 — ЦИФРЫ · NUMBERS · 2012 — 2026</p>
+  <div class="stats-grid">
+    <div class="stat-item" id="s1">
+      <span class="stat-num orange" data-target="2417" data-suffix="">0</span>
+      <span class="stat-label">ТУСОВОК ЗА 14 ЛЕТ</span>
+      <p class="stat-sub">Из них 1838 — без афиш</p>
+    </div>
+    <div class="stat-item" id="s2">
+      <span class="stat-num" data-target="37">0</span>
+      <span class="stat-label">ГОРОДОВ</span>
+      <p class="stat-sub">По России и Европе</p>
+    </div>
+    <div class="stat-item" id="s3">
+      <span class="stat-num" data-target="14">0</span>
+      <span class="stat-label">СМЕН В ЛАГЕРЕ</span>
+      <p class="stat-sub">Каждый раз у воды</p>
+    </div>
+    <div class="stat-item" id="s4">
+      <span class="stat-num orange">∞</span>
+      <span class="stat-label">СВОИХ</span>
+      <p class="stat-sub">Это не считается</p>
+    </div>
+    <div class="stat-item" id="s5">
+      <span class="stat-num" data-target="38">0</span>
+      <span class="stat-label">КЛУБНЫХ НОЧЕЙ</span>
+      <p class="stat-sub">+38 events</p>
+    </div>
+    <div class="stat-item" id="s6">
+      <span class="stat-num orange">F20</span>
+      <span class="stat-label">МКБ-10</span>
+      <p class="stat-sub">Это визитка, а не медкарта</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ TIMELINE ═══════════════════════════════ -->
+<section id="timeline">
+  <div class="timeline-header">
+    <p class="timeline-label" id="tlLabel">// 11 / 21 — ХРОНОЛОГИЯ · TIMELINE</p>
+    <div class="timeline-title">
+      <span id="tlt1">КАК ОДИН ЧЕЛОВЕК</span>
+      <span id="tlt2">ЗАВЁЛ ЦЕЛЫЙ</span>
+      <span class="accent" id="tlt3">район.</span>
+    </div>
+  </div>
+  <div class="timeline-items">
+    <div class="timeline-item" id="ti1">
+      <div class="timeline-year">2012</div>
+      <div class="timeline-content">
+        <div class="timeline-event">ПЕРВАЯ ВПИСКА</div>
+        <p class="timeline-desc">Купчино, хата на подключение. Колонка на подоконнике.</p>
+      </div>
+    </div>
+    <div class="timeline-item" id="ti2">
+      <div class="timeline-year">2015</div>
+      <div class="timeline-content">
+        <div class="timeline-event">ДВИЖ НА РАЙОНЕ</div>
+        <p class="timeline-desc">Каждые выходные — своих. Без афиш, по сарафану.</p>
+      </div>
+    </div>
+    <div class="timeline-item" id="ti3">
+      <div class="timeline-year">2018</div>
+      <div class="timeline-content">
+        <div class="timeline-event">УШЁЛ В ГОРОД</div>
+        <p class="timeline-desc">Из дворов — на крыши и набережные.</p>
+      </div>
+    </div>
+    <div class="timeline-item" id="ti4">
+      <div class="timeline-year" style="color:var(--orange)">2026</div>
+      <div class="timeline-content">
+        <div class="timeline-event">ДВИЖ — ЭТО ОН</div>
+        <p class="timeline-desc">Где Юра — там движ — уже формула.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SERVICES ═══════════════════════════════ -->
+<section id="services">
+  <p class="services-label" id="svLabel">// 16 / 21 — ЧТО Я ДЕЛАЮ · SERVICES</p>
+  <div class="services-title">
+    <span id="svT1">ЧТО</span>
+    <span id="svT2">Я ДЕЛАЮ.</span>
+  </div>
+  <div class="services-grid">
+    <div class="service-card" id="sc1">
+      <span class="service-num">01</span>
+      <div class="service-name">ДВИЖ.</div>
+      <div class="service-sub">туры</div>
+      <p class="service-desc">Приеду в твой город. Соберём своих. Поднимем район. Без афиш — только сарафан.</p>
+    </div>
+    <div class="service-card" id="sc2">
+      <span class="service-num">02</span>
+      <div class="service-name">ДВИЖ.</div>
+      <div class="service-sub">тусы</div>
+      <p class="service-desc">Клубные вечера, хата-вписки, крыши, набережные. Всё по-братски.</p>
+    </div>
+    <div class="service-card" id="sc3">
+      <span class="service-num">03</span>
+      <div class="service-name">ДВИЖ.</div>
+      <div class="service-sub">лагерь</div>
+      <p class="service-desc">10 дней у воды без сети. Палатки, костёр, гитара, рыба, утро у воды. 2 смены в год.</p>
+    </div>
+    <div class="service-card" id="sc4">
+      <span class="service-num">04 — ФЛАГМАН</span>
+      <div class="service-name">ГЛАВВРАЧ.</div>
+      <div class="service-sub">жить в кайф</div>
+      <p class="service-desc">Реаб. центр для тех, кто попал в топ. Для тех, кому громко в голове — делаем тише. Главврач — я.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ TOUR 2026 ═══════════════════════════════ -->
+<section id="tour">
+  <p class="tour-label" id="tourLabel">// 06 / 21 — ДВИЖ.ТУРЫ · TOUR 2026 · СЕЗОН XII</p>
+  <div class="tour-header">
+    <div>
+      <div class="tour-title">
+        <span id="tourT1">ТУР 2026.</span>
+        <span class="script" id="tourT2">по своим!</span>
+      </div>
+    </div>
+    <div class="tour-meta">
+      <strong>06</strong>
+      ОСТАНОВОК<br>
+      ЯНВ — АВГ<br>
+      ВХОД → @XXIBRO
+    </div>
+  </div>
+  <div class="tour-dates">
+    <div class="tour-date" id="td1">
+      <div class="date-num">14 ЯНВ</div>
+      <div class="date-loc">Купчино · обнимка во дворе</div>
+      <div class="date-note">ПРОШЛО</div>
+    </div>
+    <div class="tour-date" id="td2">
+      <div class="date-num">9 ФЕВ</div>
+      <div class="date-loc">Кунцино · хата у Толика</div>
+      <div class="date-note">ПРОШЛО</div>
+    </div>
+    <div class="tour-date" id="td3">
+      <div class="date-num">19 МАР</div>
+      <div class="date-loc">Гражданка · набережная</div>
+      <div class="date-note">ПРОШЛО</div>
+    </div>
+    <div class="tour-date" id="td4">
+      <div class="date-num">31 МАЯ</div>
+      <div class="date-loc">Шушары · озеро</div>
+      <div class="date-note">СКОРО</div>
+    </div>
+    <div class="tour-date" id="td5">
+      <div class="date-num">20 ИЮН</div>
+      <div class="date-loc">Девяткино · крыша</div>
+      <div class="date-note">СКОРО</div>
+    </div>
+    <div class="tour-date final" id="td6">
+      <div class="date-num">31 АВГ <span class="date-star">★</span></div>
+      <div class="date-loc">Сестрорецк · залив</div>
+      <div class="date-note">ФИНАЛ</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ CAMP ═══════════════════════════════ -->
+<section id="camp">
+  <div class="camp-inner">
+    <div>
+      <p class="camp-label" id="campLabel">// 08 / 21 — ДВИЖ.ЛАГЕРЬ · OFF THE GRID</p>
+      <div class="camp-title">
+        <span id="campT1">ЛАГЕРЬ.</span>
+        <span class="camp-script" id="campT2">у воды!</span>
+      </div>
+      <p class="camp-desc" id="campDesc">
+        10 дней без интернета. Палатки, костёр, гитара, рыба, утро у воды.
+        Никаких афиш — координаты только в личке.
+      </p>
+    </div>
+    <div class="camp-details" id="campDetails">
+      <div class="camp-detail">
+        <span class="key">СМЕНА №2</span>
+        <span class="val accent">12–22 ИЮЛЯ</span>
+      </div>
+      <div class="camp-detail">
+        <span class="key">ПАЛАТКА</span>
+        <span class="val">СВОЯ</span>
+      </div>
+      <div class="camp-detail">
+        <span class="key">ЕДА</span>
+        <span class="val">ОБЩАК</span>
+      </div>
+      <div class="camp-detail">
+        <span class="key">ИНТЕРНЕТ</span>
+        <span class="val" style="color:var(--gray)">НЕТ</span>
+      </div>
+      <div class="camp-detail">
+        <span class="key">ДВИЖ</span>
+        <span class="val accent">ДА</span>
+      </div>
+      <div class="camp-detail">
+        <span class="key">ЗАЯВКА</span>
+        <span class="val accent">→ @XXIBRO</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ QUOTE ═══════════════════════════════ -->
+<section id="quote">
+  <div class="quote-inner">
+    <p class="quote-label" id="qLabel">// 15 / 21 — ЦИТАТА · ОТ СВОИХ</p>
+    <div class="quote-text">
+      <span id="qt1">СВОИХ НЕ БРОСАЕМ</span>
+      <span id="qt2">НИ НОРМАЛЬНЫХ,</span>
+      <span class="handwritten" id="qt3">ни психов!</span>
+    </div>
+    <p class="quote-sig" id="qSig">— Ю. Н. Максимов</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ REVIEWS ═══════════════════════════════ -->
+<section id="reviews">
+  <p class="reviews-label" id="revLabel">// 17 / 21 — ОТЗЫВЫ СВОИХ · REFERENCES</p>
+  <div class="reviews-title">
+    <span id="revT1">ОТЗЫВЫ</span>
+    <span class="orange" id="revT2">СВОИХ.</span>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card" id="rv1">
+      <span class="review-quote-mark">"</span>
+      <p class="review-text">«Юра поднял мне район за вечер. Думал — не бывает. Бывает.»</p>
+      <div class="review-author">
+        <span class="review-name">Толик</span>
+        <span class="review-meta">Купчино · 2014</span>
+      </div>
+    </div>
+    <div class="review-card" id="rv2">
+      <span class="review-quote-mark">"</span>
+      <p class="review-text">«Не отвечает в личке день — а потом ставит трек и оказывается рядом.»</p>
+      <div class="review-author">
+        <span class="review-name">Катя</span>
+        <span class="review-meta">Гражданка · 2019</span>
+      </div>
+    </div>
+    <div class="review-card" id="rv3">
+      <span class="review-quote-mark">"</span>
+      <p class="review-text">«На лагере он первый у костра и последний у воды. Это и есть движ.»</p>
+      <div class="review-author">
+        <span class="review-name">Лёха</span>
+        <span class="review-meta">Смена 2 · 2023</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ CONTACT ═══════════════════════════════ -->
+<section id="contact">
+  <p class="contact-eyebrow" id="ctEye">// 20 / 21 — КОНТАКТЫ · GET IN TOUCH</p>
+  <div class="contact-big">
+    <span id="ctT1">ПИШИ.</span>
+  </div>
+  <div class="contact-script">
+    <span id="ctT2">в личку!</span>
+  </div>
+  <a href="https://t.me/xxibro" class="contact-handle" id="ctHandle">@XXIBRO</a>
+  <div class="contact-meta" id="ctMeta">
+    <strong>TELEGRAM</strong> t.me/xxibro<br>
+    <strong>ГОРОД</strong> Санкт-Петербург<br>
+    <strong>РЕЖИМ</strong> Отвечаю когда выхожу из воды
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© ДВИЖ 2012 — ∞ · ЮРИЙ НИКОЛАЕВИЧ МАКСИМОВ · @XXIBRO</div>
+  <div class="footer-legal">Это визитка, а не медкарта. F20.0 is serious. Сходи к специалисту. Раньше — лучше.</div>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<!-- SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/CustomEase.min.js"></script>
+
+<script>
+gsap.registerPlugin(ScrollTrigger, CustomEase);
+
+CustomEase.create("expo", "0.16, 1, 0.3, 1");
+CustomEase.create("bounce", "0.34, 1.56, 0.64, 1");
+
+/* ── GRAIN ────────────────────────────────────────────── */
+const canvas = document.getElementById('grain');
+const ctx = canvas.getContext('2d');
+let animFrame;
+function resizeGrain() {
+  canvas.width = window.innerWidth * 2;
+  canvas.height = window.innerHeight * 2;
+}
+function drawGrain() {
+  const w = canvas.width, h = canvas.height;
+  const img = ctx.createImageData(w, h);
+  const data = img.data;
+  for (let i = 0; i < data.length; i += 4) {
+    const v = (Math.random() * 255) | 0;
+    data[i] = data[i+1] = data[i+2] = v;
+    data[i+3] = 40;
+  }
+  ctx.putImageData(img, 0, 0);
+  animFrame = requestAnimationFrame(drawGrain);
+}
+resizeGrain();
+drawGrain();
+window.addEventListener('resize', resizeGrain);
+
+/* ── CURSOR ────────────────────────────────────────────── */
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animCursor() {
+  cur.style.left = mx + 'px';
+  cur.style.top  = my + 'px';
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top  = ry + 'px';
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+document.querySelectorAll('a, button, .service-card, .review-card, .camp-detail').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cur.style.width = '24px'; cur.style.height = '24px';
+    ring.style.width = '60px'; ring.style.height = '60px';
+  });
+  el.addEventListener('mouseleave', () => {
+    cur.style.width = '12px'; cur.style.height = '12px';
+    ring.style.width = '40px'; ring.style.height = '40px';
+  });
+});
+
+/* ── PROGRESS BAR ────────────────────────────────────────── */
+const pb = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  pb.style.width = pct + '%';
+});
+
+/* ── SMOOTH SCROLL ────────────────────────────────────────── */
+let lerpY = 0, targetY = 0, currentY = 0;
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+/* ── HERO ENTRANCE ────────────────────────────────────────── */
+const heroTL = gsap.timeline({ defaults: { ease: 'expo' } });
+heroTL
+  .to('#heroName1', { y: '0%', duration: 1.1, delay: 0.3 })
+  .to('#heroName2', { y: '0%', duration: 1.1 }, '-=0.85')
+  .to('#heroDvizh', { y: '0%', duration: 1 }, '-=0.7')
+  .to('#heroMeta',  { opacity: 1, y: 0, duration: 0.7 }, '-=0.4')
+  .to('#heroSub',   { opacity: 1, y: 0, duration: 0.7 }, '-=0.3')
+  .to('#heroCount', { opacity: 1, duration: 0.7 }, '-=0.2');
+
+/* ── HELPER: SLIDE-UP REVEAL ────────────────────────────────── */
+function revealUp(selector, trigger, stagger = 0) {
+  gsap.to(selector, {
+    y: '0%', duration: 1.1, ease: 'expo', stagger,
+    scrollTrigger: { trigger, start: 'top 78%' }
+  });
+}
+function fadeIn(selector, trigger, opts = {}) {
+  gsap.to(selector, {
+    opacity: 1, y: 0, x: 0, duration: 0.8, ease: 'expo',
+    ...opts,
+    scrollTrigger: { trigger, start: 'top 80%' }
+  });
+}
+
+/* ── MANIFESTO ────────────────────────────────────────── */
+fadeIn('#mLabel', '#manifesto', { x: 0 });
+revealUp(['#m1','#m2','#m3','#m4'], '#manifesto', 0.1);
+gsap.to('#m5', { y: '0%', duration: 1.2, ease: 'bounce',
+  scrollTrigger: { trigger: '#manifesto', start: 'top 60%' } });
+fadeIn('#manifestoBody', '#manifesto', { delay: 0.4 });
+
+/* ── STATS ────────────────────────────────────────── */
+fadeIn('#statsLabel', '#stats', {});
+['#s1','#s2','#s3','#s4','#s5','#s6'].forEach((id, i) => {
+  gsap.to(id, {
+    opacity: 1, y: 0, duration: 0.8, ease: 'expo', delay: i * 0.08,
+    scrollTrigger: { trigger: '#stats', start: 'top 75%' }
+  });
+});
+
+/* Counter animation */
+document.querySelectorAll('[data-target]').forEach(el => {
+  const target = parseInt(el.dataset.target);
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 80%',
+    onEnter: () => {
+      gsap.to({ val: 0 }, {
+        val: target, duration: 1.8, ease: 'power2.out',
+        onUpdate: function() {
+          el.textContent = Math.round(this.targets()[0].val).toLocaleString('ru');
+        }
+      });
+    }
+  });
+});
+
+/* ── TIMELINE ────────────────────────────────────────── */
+fadeIn('#tlLabel', '#timeline', {});
+revealUp(['#tlt1','#tlt2'], '#timeline', 0.1);
+gsap.to('#tlt3', { y: '0%', duration: 1.1, ease: 'bounce',
+  scrollTrigger: { trigger: '#timeline', start: 'top 70%' } });
+['#ti1','#ti2','#ti3','#ti4'].forEach((id, i) => {
+  gsap.to(id, {
+    opacity: 1, y: 0, duration: 0.7, ease: 'expo', delay: i * 0.12,
+    scrollTrigger: { trigger: '#timeline', start: 'top 60%' }
+  });
+});
+
+/* ── SERVICES ────────────────────────────────────────── */
+fadeIn('#svLabel', '#services', {});
+revealUp(['#svT1','#svT2'], '#services', 0.1);
+['#sc1','#sc2','#sc3','#sc4'].forEach((id, i) => {
+  gsap.to(id, {
+    opacity: 1, y: 0, duration: 0.8, ease: 'expo', delay: i * 0.1,
+    scrollTrigger: { trigger: '#services', start: 'top 65%' }
+  });
+});
+
+/* ── TOUR ────────────────────────────────────────── */
+fadeIn('#tourLabel', '#tour', {});
+revealUp(['#tourT1','#tourT2'], '#tour', 0.12);
+['#td1','#td2','#td3','#td4','#td5','#td6'].forEach((id, i) => {
+  gsap.to(id, {
+    opacity: 1, x: 0, duration: 0.7, ease: 'expo', delay: i * 0.08,
+    scrollTrigger: { trigger: '#tour', start: 'top 65%' }
+  });
+});
+
+/* ── CAMP ────────────────────────────────────────── */
+fadeIn('#campLabel', '#camp', {});
+revealUp(['#campT1','#campT2'], '#camp', 0.1);
+gsap.to('#campT2', { y: '0%', duration: 1.1, ease: 'bounce',
+  scrollTrigger: { trigger: '#camp', start: 'top 70%' } });
+fadeIn('#campDesc', '#camp', { delay: 0.3 });
+gsap.to('#campDetails', {
+  opacity: 1, y: 0, duration: 0.9, ease: 'expo', delay: 0.2,
+  scrollTrigger: { trigger: '#camp', start: 'top 65%' }
+});
+
+/* ── QUOTE ────────────────────────────────────────── */
+fadeIn('#qLabel', '#quote', {});
+revealUp(['#qt1','#qt2'], '#quote', 0.15);
+gsap.to('#qt3', { y: '0%', duration: 1.2, ease: 'bounce',
+  scrollTrigger: { trigger: '#quote', start: 'top 70%' } });
+gsap.to('#qSig', {
+  opacity: 1, duration: 0.7, delay: 0.4,
+  scrollTrigger: { trigger: '#quote', start: 'top 65%' }
+});
+
+/* ── REVIEWS ────────────────────────────────────────── */
+fadeIn('#revLabel', '#reviews', {});
+revealUp(['#revT1','#revT2'], '#reviews', 0.12);
+['#rv1','#rv2','#rv3'].forEach((id, i) => {
+  gsap.to(id, {
+    opacity: 1, y: 0, duration: 0.8, ease: 'expo', delay: i * 0.12,
+    scrollTrigger: { trigger: '#reviews', start: 'top 70%' }
+  });
+});
+
+/* ── CONTACT ────────────────────────────────────────── */
+fadeIn('#ctEye', '#contact', {});
+revealUp('#ctT1', '#contact');
+gsap.to('#ctT2', { y: '0%', duration: 1.2, ease: 'bounce',
+  scrollTrigger: { trigger: '#contact', start: 'top 70%' } });
+gsap.to('#ctHandle', {
+  opacity: 1, y: 0, duration: 0.8, ease: 'expo', delay: 0.3,
+  scrollTrigger: { trigger: '#contact', start: 'top 65%' }
+});
+gsap.to('#ctMeta', {
+  opacity: 1, duration: 0.7, delay: 0.5,
+  scrollTrigger: { trigger: '#contact', start: 'top 65%' }
+});
+
+/* ── PARALLAX SECTIONS ────────────────────────────────── */
+gsap.to('#hero .hero-headline', {
+  y: () => ScrollTrigger.maxScroll(window) > 0 ? '-15%' : 0,
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '#hero',
+    start: 'top top',
+    end: 'bottom top',
+    scrub: 1,
+  }
+});
+
+/* ── SECTION LINE REVEALS ────────────────────────────── */
+document.querySelectorAll('section').forEach(sec => {
+  gsap.fromTo(sec, { borderColor: 'transparent' }, {
+    scrollTrigger: { trigger: sec, start: 'top 90%' }
+  });
+});
+</script>
+</body>
+</html>

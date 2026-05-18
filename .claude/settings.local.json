@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ' *)",
+      "Bash(pip install *)",
+      "Bash(mkdir -p \"C:\\\\Users\\\\Юрий\\\\Desktop\\\\dvizh-site\\\\src\\\\app\" \"C:\\\\Users\\\\Юрий\\\\Desktop\\\\dvizh-site\\\\public\" && echo \"ok\")",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(ls -lt \"D:\\\\Downloads\\\\\" 2>/dev/null | head -15 ; echo \"---\" ; ls -lt \"C:\\\\Users\\\\Юрий\\\\Desktop\\\\\" 2>/dev/null | head -15)",
+      "Bash(ls \"D:\\\\Downloads\" | grep -i -E \"dvizh|движ|logo|лого|org\" | head -10)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git reset *)"
+    ]
+  }
+}

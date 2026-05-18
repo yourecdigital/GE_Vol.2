@@ -1080,7 +1080,7 @@ footer {
   .reviews-grid { grid-template-columns: 1fr; }
 }
 
-/* ── SMOKE EFFECT ────────────────────────────────────────── */
+/* ── SMOKE EFFECT (pure CSS, zero JS) ───────────────────── */
 .smoke-canvas-wrap {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -1088,6 +1088,34 @@ footer {
   pointer-events: none;
   z-index: 98;
   overflow: hidden;
+}
+.smoke-blob {
+  position: absolute;
+  bottom: -10px;
+  border-radius: 50%;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+@keyframes smoke-up {
+  0%   { transform: translateY(0)     scale(0.4); opacity: 0; }
+  18%  { opacity: var(--mo, 0.25); }
+  82%  { opacity: var(--mo, 0.25); }
+  100% { transform: translateY(-130px) scale(2.2); opacity: 0; }
+}
+@keyframes smoke-up-l {
+  0%   { transform: translateY(0) translateX(0)   scale(0.4); opacity: 0; }
+  18%  { opacity: var(--mo, 0.25); }
+  82%  { opacity: var(--mo, 0.25); }
+  100% { transform: translateY(-130px) translateX(-18px) scale(2.2); opacity: 0; }
+}
+@keyframes smoke-up-r {
+  0%   { transform: translateY(0) translateX(0)   scale(0.4); opacity: 0; }
+  18%  { opacity: var(--mo, 0.25); }
+  82%  { opacity: var(--mo, 0.25); }
+  100% { transform: translateY(-130px) translateX(18px)  scale(2.2); opacity: 0; }
 }
 @media (hover: none) { .smoke-canvas-wrap { display: none; } }
 

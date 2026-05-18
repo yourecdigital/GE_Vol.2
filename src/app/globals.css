@@ -107,7 +107,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 1.5rem 3rem;
-  mix-blend-mode: difference;
+  background: linear-gradient(to bottom, rgba(7,7,7,0.96) 0%, rgba(7,7,7,0.6) 70%, transparent 100%);
 }
 .nav-logo {
   font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
@@ -1078,4 +1078,480 @@ footer {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .services-grid { grid-template-columns: 1fr; }
   .reviews-grid { grid-template-columns: 1fr; }
+}
+
+/* ── SMOKE EFFECT ────────────────────────────────────────── */
+.smoke-canvas-wrap {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 140px;
+  pointer-events: none;
+  z-index: 98;
+  overflow: hidden;
+}
+@media (hover: none) { .smoke-canvas-wrap { display: none; } }
+
+/* ── PAGE-CONTENT VARIANTS ───────────────────────────────── */
+.page-content--alt { background: #0d0d0d; }
+.page-content--dark { background: var(--black); }
+
+/* ── MAP LOADING ─────────────────────────────────────────── */
+.map-loading {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-space), monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray-dim);
+}
+
+/* ── ORGANIZER CARD ──────────────────────────────────────── */
+.org-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.org-grid--hero {
+  grid-template-columns: minmax(280px, 380px);
+}
+.org-card {
+  border: 1px solid rgba(255,82,0,0.18);
+  padding: 1.8rem 1.5rem;
+  background: rgba(255,82,0,0.025);
+  position: relative;
+  transition: border-color 0.3s, background 0.3s;
+}
+.org-card:hover {
+  border-color: rgba(255,82,0,0.5);
+  background: rgba(255,82,0,0.06);
+}
+.org-tier-badge {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  font-family: var(--font-space), monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.18em;
+  color: var(--orange);
+  border: 1px solid rgba(255,82,0,0.35);
+  padding: 0.18rem 0.45rem;
+  text-transform: uppercase;
+}
+.org-avatar {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255,82,0,0.25), rgba(20,10,5,0.9));
+  border: 1px solid rgba(255,82,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  color: var(--orange);
+  letter-spacing: 0.05em;
+}
+.org-name {
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 1.35rem;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  margin-bottom: 0.15rem;
+  line-height: 1;
+}
+.org-handle {
+  font-family: var(--font-caveat), 'Caveat', cursive;
+  font-size: 1.1rem;
+  color: var(--orange);
+  margin-bottom: 0.5rem;
+}
+.org-role {
+  font-family: var(--font-space), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.org-city {
+  font-family: var(--font-space), monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-dim);
+  margin-top: 0.3rem;
+}
+
+/* ── EVENT CARDS (tour dates) ────────────────────────────── */
+.event-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.event-card {
+  border: 1px solid var(--gray-dim);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.event-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--orange);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.35s cubic-bezier(.25,.46,.45,.94);
+}
+.event-card:hover { border-color: rgba(255,82,0,0.4); }
+.event-card:hover::before { transform: scaleY(1); }
+.event-card--final { border-color: rgba(255,82,0,0.35); }
+.event-card--final::before { transform: scaleY(1); }
+.event-card-date {
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 1.9rem;
+  color: var(--orange);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.event-card-loc {
+  font-family: var(--font-oswald), 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+.event-card-status {
+  font-family: var(--font-space), monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.event-card-status.done { color: var(--gray-dim); }
+.event-card-status.soon { color: #ffa500; }
+.event-card-status.final { color: var(--orange); font-weight: bold; }
+.event-card-org {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--gray-dim);
+}
+.event-card-org-name {
+  font-family: var(--font-space), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+  text-transform: uppercase;
+}
+.event-card-org-handle {
+  font-family: var(--font-caveat), 'Caveat', cursive;
+  font-size: 0.95rem;
+  color: var(--orange);
+}
+
+/* ── VENUE CARDS ─────────────────────────────────────────── */
+.venue-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.venue-card {
+  border: 1px solid var(--gray-dim);
+  padding: 2rem;
+  transition: border-color 0.3s;
+}
+.venue-card:hover { border-color: rgba(255,82,0,0.4); }
+.venue-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.venue-card-type {
+  font-family: var(--font-space), monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  color: var(--orange);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+.venue-card-name {
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  line-height: 1;
+}
+.venue-card-dates {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-items: flex-end;
+}
+.venue-date-pill {
+  font-family: var(--font-space), monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.12em;
+  color: var(--gray-dim);
+  border: 1px solid var(--gray-dim);
+  padding: 0.15rem 0.4rem;
+  white-space: nowrap;
+}
+.venue-card-desc {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--gray);
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+
+/* ── FORMAT STEPS ────────────────────────────────────────── */
+.format-steps {
+  display: grid;
+  gap: 0;
+  margin-top: 3rem;
+}
+.format-step {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.2rem 0;
+  border-top: 1px solid var(--gray-dim);
+}
+.format-step:last-child { border-bottom: 1px solid var(--gray-dim); }
+.format-step-num {
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--orange);
+  min-width: 3rem;
+  line-height: 1;
+}
+.format-step-text {
+  font-family: var(--font-oswald), 'Oswald', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--white);
+}
+
+/* ── SESSION CARDS (camp) ────────────────────────────────── */
+.session-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.session-card {
+  border: 1px solid var(--gray-dim);
+  padding: 2rem;
+  position: relative;
+}
+.session-card--open {
+  border-color: rgba(255,82,0,0.4);
+  background: rgba(255,82,0,0.04);
+}
+.session-card-num {
+  font-family: var(--font-space), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--orange);
+  margin-bottom: 0.8rem;
+}
+.session-card-title {
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.session-card-dates {
+  font-family: var(--font-oswald), 'Oswald', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 1rem;
+}
+.session-card-status {
+  font-family: var(--font-space), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.session-card-status.open { color: var(--orange); }
+.session-card-status.closed { color: var(--gray-dim); }
+.session-card-cta {
+  display: inline-block;
+  font-family: var(--font-space), monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--orange);
+  padding: 0.6rem 1rem;
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+.session-card-cta:hover { opacity: 0.85; }
+
+/* ── CAMP PROGRAM ────────────────────────────────────────── */
+.camp-program-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 3rem;
+}
+.camp-program-item {
+  padding: 1.5rem;
+  border: 1px solid var(--gray-dim);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.camp-program-time {
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  color: var(--orange);
+  line-height: 1;
+}
+.camp-program-desc {
+  font-family: var(--font-oswald), 'Oswald', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--gray);
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+}
+
+/* ── HIERARCHY (People page) ─────────────────────────────── */
+.hierarchy-list {
+  display: grid;
+  gap: 0;
+  margin-top: 3rem;
+}
+.hierarchy-tier {
+  display: grid;
+  grid-template-columns: 4rem 14rem 1fr;
+  gap: 2rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--gray-dim);
+  align-items: center;
+}
+.hierarchy-tier:last-child { border-bottom: 1px solid var(--gray-dim); }
+.hierarchy-tier-num {
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  color: rgba(255,82,0,0.2);
+  line-height: 1;
+}
+.hierarchy-tier-num.active { color: var(--orange); }
+.hierarchy-tier-name {
+  font-family: var(--font-oswald), 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+.hierarchy-bar {
+  height: 2px;
+  background: linear-gradient(to right, var(--orange), transparent);
+  min-width: 20px;
+}
+.hierarchy-tier-desc {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--gray);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
+
+/* ── PEOPLE MAP ──────────────────────────────────────────── */
+.people-map-wrap {
+  margin-top: 2.5rem;
+  height: 480px;
+  border: 1px solid var(--gray-dim);
+  overflow: hidden;
+  position: relative;
+  background: var(--black);
+}
+.leaflet-container {
+  background: #0a0a0a !important;
+}
+.leaflet-popup-content-wrapper {
+  background: rgba(7,7,7,0.97) !important;
+  border: 1px solid rgba(255,82,0,0.4) !important;
+  border-radius: 0 !important;
+  color: var(--white) !important;
+  box-shadow: 0 0 20px rgba(255,82,0,0.1) !important;
+}
+.leaflet-popup-tip-container { display: none; }
+.leaflet-control-attribution {
+  background: rgba(7,7,7,0.8) !important;
+  color: #333 !important;
+  font-size: 0.5rem !important;
+}
+.leaflet-control-attribution a { color: #444 !important; }
+.leaflet-tooltip {
+  background: rgba(7,7,7,0.97) !important;
+  border: 1px solid rgba(255,82,0,0.4) !important;
+  border-radius: 0 !important;
+  color: var(--white) !important;
+  box-shadow: none !important;
+  padding: 0.3rem 0.5rem !important;
+}
+.leaflet-tooltip::before { display: none !important; }
+
+/* ── PEOPLE CTA ──────────────────────────────────────────── */
+.people-cta-link {
+  display: inline-block;
+  margin-top: 2rem;
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.1em;
+  color: var(--black);
+  background: var(--orange);
+  padding: 0.7rem 2rem;
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+.people-cta-link:hover { opacity: 0.85; }
+
+/* ── RESPONSIVE for new components ──────────────────────── */
+@media (max-width: 1024px) {
+  .hierarchy-tier { grid-template-columns: 3.5rem 12rem 1fr; }
+}
+@media (max-width: 768px) {
+  .hierarchy-tier { grid-template-columns: 3rem 1fr; gap: 1rem; }
+  .hierarchy-tier-desc { display: none; }
+  .event-card-grid { grid-template-columns: 1fr; }
+  .session-grid { grid-template-columns: 1fr; }
+  .venue-card-grid { grid-template-columns: 1fr; }
+  .org-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+  .org-grid--hero { grid-template-columns: 1fr; }
+  .people-map-wrap { height: 320px; }
+  .camp-program-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .event-card-grid,
+  .session-grid,
+  .org-grid,
+  .camp-program-grid { grid-template-columns: 1fr; }
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { makeMeta, pageUrl } from "@/lib/seo";
 import { PageHero } from "@/components/dvizh/shared/PageHero";
 import { JsonLd } from "@/components/dvizh/shared/JsonLd";
+import { OrganizerCard } from "@/components/dvizh/shared/OrganizerCard";
 import { SubPageAnimations } from "@/components/dvizh/shared/SubPageAnimations";
 
 export const metadata: Metadata = makeMeta({
@@ -26,15 +27,33 @@ const CAMP_EVENT_JSONLD = {
   description: "10 дней у воды без интернета. Палатки, костёр, гитара, рыба.",
 };
 
+const SESSIONS = [
+  { num: "01", dates: "2026-06-01/2026-06-10", label: "1–10 ИЮНЯ", title: "СМЕНА №1", status: "ЗАЯВКИ ЗАКРЫТЫ", closed: true },
+  { num: "02", dates: "2026-07-12/2026-07-22", label: "12–22 ИЮЛЯ", title: "СМЕНА №2", status: "ЗАЯВКИ ОТКРЫТЫ", closed: false },
+];
+
 const DETAILS = [
   { key: "ДЛИТЕЛЬНОСТЬ", val: "10 ДНЕЙ", accent: true },
-  { key: "СМЕНА №2", val: "12–22 ИЮЛЯ", accent: true },
-  { key: "ПАЛАТКА", val: "СВОЯ", accent: false },
-  { key: "ЕДА", val: "ОБЩАК", accent: false },
-  { key: "ИНТЕРНЕТ", val: "НЕТ", accent: false, dim: true },
+  { key: "ПАЛАТКА", val: "СВОЯ" },
+  { key: "ЕДА", val: "ОБЩАК" },
+  { key: "ИНТЕРНЕТ", val: "НЕТ", dim: true },
+  { key: "СОТОВЫЙ", val: "СДАТЬ НА ХРАНЕНИЕ", dim: true },
   { key: "ДВИЖ", val: "ДА", accent: true },
   { key: "СМЕН ЗА ВСЁ ВРЕМЯ", val: "14", accent: true },
   { key: "ЗАЯВКА", val: "→ @XXIBRO", accent: true },
+];
+
+const CAMP_PROGRAM = [
+  { time: "УТРО", desc: "Рыбалка, кофе на костре, купание" },
+  { time: "ДЕНЬ", desc: "Река, солнце, настолки, разговоры" },
+  { time: "ВЕЧЕР", desc: "Общий котёл, гитара у костра" },
+  { time: "НОЧЬ", desc: "Звёзды, тишина, свои" },
+];
+
+const ORGANIZERS = [
+  { name: "ЮРА МАКСИМОВ", handle: "@XXIBRO", role: "Директор лагеря · Founder", tier: 1 as const, city: "Санкт-Петербург", since: "2012" },
+  { name: "ЛЁША ЦЕНТР", handle: "@alexcmf", role: "Хозяйственная часть", tier: 2 as const, city: "ЦФО" },
+  { name: "ЖЕНЯ УРАЛ", handle: "@evgural", role: "Медицина · Безопасность", tier: 2 as const, city: "Урал" },
 ];
 
 export default function CampPage() {
@@ -45,25 +64,41 @@ export default function CampPage() {
         label="// ДВИЖ.ЛАГЕРЬ · OFF THE GRID"
         title="ЛАГЕРЬ."
         accent="у воды!"
-        description="10 дней без интернета — и ты уедешь другим человеком. Палатки, костёр, гитара, рыба, утро у воды. 14 смен за всю историю, 2 смены каждый год. Координаты только в личке."
+        description="10 дней без интернета — и ты уедешь другим человеком. Палатки, костёр, гитара, рыба, утро у воды. 14 смен за всю историю, 2 смены каждый год."
       />
 
-      <section className="page-content" aria-labelledby="camp-details-title">
+      {/* Sessions */}
+      <section className="page-content" aria-labelledby="sessions-title">
+        <p className="page-section-label">// СМЕНЫ 2026 · SESSIONS</p>
+        <h2 id="sessions-title">ДАТЫ <span className="accent">лагеря</span></h2>
+
+        <div className="session-grid">
+          {SESSIONS.map((s) => (
+            <article key={s.num} className={`session-card${s.closed ? " session-card--closed" : " session-card--open"}`}>
+              <div className="session-card-num">{s.num}</div>
+              <div className="session-card-title">{s.title}</div>
+              <time className="session-card-dates" dateTime={s.dates}>{s.label}</time>
+              <div className={`session-card-status${s.closed ? " closed" : " open"}`}>{s.status}</div>
+              {!s.closed && (
+                <a href="https://t.me/xxibro" target="_blank" rel="noopener noreferrer" className="session-card-cta">
+                  ПОДАТЬ ЗАЯВКУ →
+                </a>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Details */}
+      <section className="page-content page-content--alt" aria-labelledby="camp-details-title">
         <p className="page-section-label">// ДЕТАЛИ · DETAILS</p>
         <h2 id="camp-details-title">КАК ЭТО <span className="accent">устроено?</span></h2>
         <p>
           Лагерь ДВИЖ — это полная перезагрузка. Ты оставляешь телефон,
           суету, город — и оказываешься у воды с теми, кто понимает без слов.
-          Каждый лагерь — уникальный. Но формула одна: природа, свои, тишина
-          и движ, который рождается сам.
-        </p>
-        <p>
-          Приезжай со своей палаткой. Еда — общая. Готовим вместе, едим вместе,
-          живём вместе. Утром — рыбалка и кофе на костре. Днём — река и солнце.
-          Вечером — гитара, разговоры, звёзды. И так 10 дней.
         </p>
 
-        <div className="camp-details" style={{ marginTop: "3rem", opacity: 1 }}>
+        <div className="camp-details" style={{ marginTop: "2rem", opacity: 1 }}>
           {DETAILS.map((d, i) => (
             <div key={i} className="camp-detail">
               <span className="key">{d.key}</span>
@@ -78,15 +113,30 @@ export default function CampPage() {
         </div>
       </section>
 
-      <section className="page-content" aria-labelledby="camp-rules-title">
-        <p className="page-section-label">// ПРАВИЛА · RULES</p>
-        <h2 id="camp-rules-title">ПРАВИЛА <span className="accent">лагеря</span></h2>
-        <p>
-          Нет расписания. Нет обязаловки. Единственное правило — уважай своих
-          и место, где ты находишься. Убираем за собой. Помогаем друг другу.
-          Не грузим тех, кто хочет тишины. Это не детский лагерь и не фестиваль.
-          Это движ у воды — в чистом виде.
-        </p>
+      {/* Program */}
+      <section className="page-content" aria-labelledby="camp-prog-title">
+        <p className="page-section-label">// ПРОГРАММА · A DAY IN CAMP</p>
+        <h2 id="camp-prog-title">КАК ПРОХОДИТ <span className="accent">день?</span></h2>
+
+        <div className="camp-program-grid">
+          {CAMP_PROGRAM.map((p, i) => (
+            <div key={i} className="camp-program-item">
+              <span className="camp-program-time">{p.time}</span>
+              <span className="camp-program-desc">{p.desc}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Organizers */}
+      <section className="page-content page-content--alt" aria-labelledby="camp-org-title">
+        <p className="page-section-label">// ОРГАНИЗАТОРЫ · TEAM</p>
+        <h2 id="camp-org-title">КТО ВЕЗЁТ <span className="accent">лагерь?</span></h2>
+        <div className="org-grid">
+          {ORGANIZERS.map((p, i) => (
+            <OrganizerCard key={i} {...p} />
+          ))}
+        </div>
       </section>
 
       <SubPageAnimations />

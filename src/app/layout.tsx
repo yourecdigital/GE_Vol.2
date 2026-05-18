@@ -7,6 +7,7 @@ import { GrainOverlay } from "@/components/dvizh/shared/GrainOverlay";
 import { CustomCursor } from "@/components/dvizh/shared/CustomCursor";
 import { ProgressBar } from "@/components/dvizh/shared/ProgressBar";
 import { JsonLd } from "@/components/dvizh/shared/JsonLd";
+import { SmokeEffect } from "@/components/dvizh/shared/SmokeEffect";
 import "./globals.css";
 
 const bebas = Bebas_Neue({
@@ -86,6 +87,7 @@ export default function RootLayout({
         <GrainOverlay />
         <CustomCursor />
         <ProgressBar />
+        <SmokeEffect />
         <Header />
         <main>{children}</main>
         <Footer />

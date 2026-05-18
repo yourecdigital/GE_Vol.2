@@ -13,7 +13,21 @@
       "Bash(git push *)",
       "Bash(git checkout *)",
       "Bash(git add *)",
-      "Bash(git reset *)"
+      "Bash(git reset *)",
+      "Bash(xargs '-I{}' sh -c 'if [ -f \"{}\" ]; then size=$\\(stat -c%s \"{}\" 2>/dev/null\\); if [ \"$size\" -gt 50000000 ] 2>/dev/null; then echo \"$size {}\"; fi; fi')",
+      "Bash(git commit -m ' *)",
+      "Bash(gh workflow *)",
+      "Bash(gh run *)",
+      "Bash(git commit *)",
+      "Bash(gh api *)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('URL:', d.get\\('html_url'\\)\\); print\\('Status:', d.get\\('status'\\)\\); print\\('CNAME:', d.get\\('cname'\\)\\)\")",
+      "Bash(findstr -i \"workspace\\\\|workspaces\")",
+      "Bash(findstr \"workspace:\")",
+      "Bash(npm --version)",
+      "Bash(findstr \"\\\\\"main\\\\\"\\\\|\\\\\"module\\\\\"\\\\|\\\\\"types\\\\\"\\\\|\\\\\"exports\\\\\"\")",
+      "Bash(Get-Content \"C:\\\\Users\\\\Юрий\\\\Desktop\\\\WORK\\\\ЭПИК\\\\EVENT\\\\16.05.2026\\\\website\\\\.claude\\\\worktrees\\\\priceless-lalande-61ac1c\\\\node_modules\\\\@tsparticles\\\\react\\\\package.json\")",
+      "Bash(Select-String \"main|types|exports\")",
+      "Bash(grep -v \"^node$\\\\|^package\\\\|^README\\\\|^LICENSE\")"
     ]
   }
 }

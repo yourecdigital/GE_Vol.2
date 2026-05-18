@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { href: "/parties/", label: "ТУСЫ" },
   { href: "/camp/", label: "ЛАГЕРЬ" },
   { href: "/culture/", label: "КУЛЬТУРА" },
+  { href: "/people/", label: "НАШИ ЛЮДИ" },
   { href: "/rehab/", label: "ГЛАВВРАЧ" },
   { href: "/reviews/", label: "ОТЗЫВЫ" },
   { href: "/contacts/", label: "КОНТАКТЫ" },

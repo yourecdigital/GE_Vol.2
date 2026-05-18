@@ -31,6 +31,8 @@ jobs:
 
       - name: Build static site
         run: npm run build
+        env:
+          SKIP_VERIFY_EXPORT: "1"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

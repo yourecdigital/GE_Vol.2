@@ -10,6 +10,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://yourecdigital.github.io/dvizh/sitemap.xml",
+    sitemap: "https://yourecdigital.github.io/GE_Vol.2/sitemap.xml",
   };
 }

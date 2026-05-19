@@ -10,7 +10,7 @@ export function CartButton({ onClick }: { onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-gold text-ink font-semibold rounded-full px-6 py-4 shadow-[0_8px_32px_rgba(196,149,14,0.4)] transition-all duration-300 hover:scale-105 hover:shadow-[0_12px_40px_rgba(196,149,14,0.5)]"
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-wine text-cream font-semibold rounded-full px-6 py-4 shadow-[0_8px_32px_rgba(122,64,32,0.5)] transition-all duration-300 hover:scale-105 hover:shadow-[0_12px_40px_rgba(164,86,50,0.55)]"
       style={{ fontFamily: "var(--font-mono)" }}
     >
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">

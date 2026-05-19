@@ -2,6 +2,7 @@
 
 import { CONTACT } from "@/lib/georgian-menu";
 import { motion } from "framer-motion";
+import { TelegramEmoji } from "@/components/telegram-emoji";
 
 export function ContactsContent() {
   return (
@@ -20,7 +21,7 @@ export function ContactsContent() {
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}
               className="group menu-card p-8 sm:p-10 bg-gradient-to-br from-wine/10 to-gold/5">
               <div className="flex items-start gap-4 mb-6">
-                <span className="text-4xl">☎️</span>
+                <TelegramEmoji name="phone" size={44} />
                 <div>
                   <h3 className="text-ink font-bold text-xl mb-1" style={{ fontFamily: "var(--font-heading)" }}>Позвоните нам</h3>
                   <p className="text-ink/40 text-sm body-mono">Быстро и удобно</p>
@@ -36,7 +37,7 @@ export function ContactsContent() {
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} viewport={{ once: true }}
               className="group menu-card p-8 sm:p-10 bg-gradient-to-br from-gold/10 to-wine/5">
               <div className="flex items-start gap-4 mb-6">
-                <span className="text-4xl">💬</span>
+                <TelegramEmoji name="speech" size={44} />
                 <div>
                   <h3 className="text-ink font-bold text-xl mb-1" style={{ fontFamily: "var(--font-heading)" }}>Напишите в ВКонтакте</h3>
                   <p className="text-ink/40 text-sm body-mono">Ответим вскоре</p>

@@ -13,7 +13,7 @@ export function AboutSection() {
     <section id="about" ref={ref} className="bg-hero relative overflow-hidden py-20 sm:py-32 px-6 sm:px-10">
       <motion.div style={{ y: decorY }} className="pointer-events-none absolute right-0 top-0 bottom-0 w-1/2 opacity-[0.05]" aria-hidden>
         <div className="absolute inset-0 flex items-center justify-center"
-          style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(18rem,30vw,36rem)", fontWeight: 700, color: "#D4A93A", lineHeight: 1 }}>✦</div>
+          style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(18rem,30vw,36rem)", fontWeight: 700, color: "#A45632", lineHeight: 1 }}>✦</div>
       </motion.div>
 
       <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">

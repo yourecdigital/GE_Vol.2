@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart, updateQty, removeFromCart, clearCart } from "@/lib/cart-store";
 import { CONTACT } from "@/lib/georgian-menu";
+import { TelegramEmoji } from "@/components/telegram-emoji";
 
 export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { items, total, count } = useCart();
@@ -25,7 +26,7 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-[60] bg-ink/70"
+            className="fixed inset-0 z-[60] bg-black/70"
           />
 
           {/* Drawer */}
@@ -60,7 +61,7 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
             <div className="flex-1 overflow-y-auto px-6 py-2">
               {items.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full gap-4 text-cream/30">
-                  <span className="text-5xl">🛒</span>
+                  <TelegramEmoji name="cart" size={64} className="opacity-70" />
                   <p className="label-caps">Корзина пуста</p>
                 </div>
               ) : (

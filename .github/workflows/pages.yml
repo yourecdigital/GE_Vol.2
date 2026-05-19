@@ -29,11 +29,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Sync Telegram animated emojis
+        run: npm run telegram-emojis
+
       - name: Build static site
         run: npm run build
         env:
           SKIP_VERIFY_EXPORT: "1"
-          BASE_PATH: /dvizh
+          BASE_PATH: /GE_Vol.2
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

@@ -1,3 +1,5 @@
+import type { TelegramEmojiId } from "@/lib/telegram-emoji";
+
 export interface MenuItem {
   name: string;
   price: number;
@@ -11,7 +13,7 @@ export interface MenuItem {
 export interface MenuCategory {
   id: string;
   title: string;
-  emoji: string;
+  emoji: TelegramEmojiId;
   items: MenuItem[];
 }
 
@@ -19,10 +21,23 @@ export const MENU: MenuCategory[] = [
   {
     id: "mangal",
     title: "Мангал",
-    emoji: "🔥",
+    emoji: "fire",
     items: [
-      { name: "Каре ягнёнка", price: 1250, badge: "хит", shortDesc: "Нежнейшие рёбрышки на кости, обжаренные на углях с пряным дымком — тают во рту" },
-      { name: "Мякоть баранины", price: 1100, shortDesc: "Сочные кусочки молодого барашка с ароматом горных трав и лёгкой перчинкой" },
+      {
+        name: "Каре ягнёнка",
+        price: 1250,
+        badge: "хит",
+        image: "/menu/mangal/kare-yagnenka.png",
+        shortDesc: "Нежнейшие рёбрышки на кости, обжаренные на углях с пряным дымком — тают во рту",
+        desc: "Каре ягнёнка на углях — фирменная позиция мангала. Мясо сочное, с лёгким дымком и пряной корочкой, подаётся с красным луком и свежей зеленью. Идеально для тех, кто ценит настоящий вкус Кавказа.",
+      },
+      {
+        name: "Мякоть баранины",
+        price: 1100,
+        image: "/menu/mangal/myakot-baraniny.png",
+        shortDesc: "Сочные кусочки молодого барашка с ароматом горных трав и лёгкой перчинкой",
+        desc: "Мякоть молодой баранины, маринованная по домашнему рецепту и обжаренная на мангале до сочной середины. Подаётся горячей, с луком, зеленью и ароматным мясным соком.",
+      },
       { name: "Шашлык из свинины (шея)", price: 750, shortDesc: "Мраморная шейка на углях — самый сочный и ароматный шашлык с дымком" },
       { name: "Шашлык из свинины (окорок)", price: 650, shortDesc: "Плотное, в меру жирное мясо с хрустящей корочкой и нежной серединкой" },
       { name: "Антрекот свинина", price: 800, shortDesc: "Толстый стейк на кости, обжаренный на углях до золотистой корочки" },
@@ -39,7 +54,7 @@ export const MENU: MenuCategory[] = [
   {
     id: "sets",
     title: "Сеты",
-    emoji: "🍱",
+    emoji: "bento",
     items: [
       {
         name: "Сет «Классик»",
@@ -87,7 +102,7 @@ export const MENU: MenuCategory[] = [
   {
     id: "hot-dishes",
     title: "Горячие блюда",
-    emoji: "🍽️",
+    emoji: "meat",
     items: [
       { name: "Хинкали с мясом", price: 650, unit: "3 шт", badge: "хит", shortDesc: "Мешочки из тонкого теста с сочной начинкой из мяса и бульоном внутри" },
       { name: "Хинкали жареные", price: 700, unit: "3 шт", shortDesc: "Хрустящие хинкали, обжаренные до золотой корочки — внутри горячий бульон" },
@@ -103,7 +118,7 @@ export const MENU: MenuCategory[] = [
   {
     id: "baking",
     title: "Выпечка",
-    emoji: "🫓",
+    emoji: "bun",
     items: [
       { name: "Хачапури по-мегрельски", price: 800, badge: "хит", shortDesc: "Лепёшка с двойным сыром — внутри и сверху расплавленный сулугуни" },
       { name: "Хачапури по-имеретински", price: 700, shortDesc: "Классическая круглая лепёшка с начинкой из нежного имеретинского сыра" },
@@ -116,7 +131,7 @@ export const MENU: MenuCategory[] = [
   {
     id: "cold-starters",
     title: "Холодные закуски",
-    emoji: "🥗",
+    emoji: "clover",
     items: [
       { name: "Ассорти сыров", price: 900, shortDesc: "Сулугуни, имеретинский, копчёный — грузинское трио для ценителей" },
       { name: "Домашние соленья", price: 600, shortDesc: "Хрустящие огурчики, томаты, перец и чеснок — бабушкин рецепт" },
@@ -127,7 +142,7 @@ export const MENU: MenuCategory[] = [
   {
     id: "hot-starters",
     title: "Горячие закуски",
-    emoji: "🌶️",
+    emoji: "mushroom",
     items: [
       { name: "Гренки", price: 290, shortDesc: "Хрустящие чесночные гренки — идеальная закуска к любому блюду" },
       { name: "Грибы сулугуни", price: 690, shortDesc: "Шампиньоны, фаршированные расплавленным сулугуни и зеленью" },
@@ -137,7 +152,7 @@ export const MENU: MenuCategory[] = [
   {
     id: "salads",
     title: "Салаты",
-    emoji: "🥙",
+    emoji: "flatbread",
     items: [
       { name: "Цезарь с курицей", price: 790, shortDesc: "Классика с хрустящей курицей, пармезаном и фирменным соусом" },
       { name: "Цезарь с креветками", price: 950, shortDesc: "Нежные креветки на подушке из романо с сырной стружкой и крутонами" },
@@ -149,7 +164,7 @@ export const MENU: MenuCategory[] = [
   {
     id: "soups",
     title: "Супы",
-    emoji: "🍲",
+    emoji: "stew",
     items: [
       { name: "Харчо", price: 630, badge: "хит", shortDesc: "Острый грузинский суп с говядиной, рисом, ткемали и грецким орехом" },
       { name: "Хашлама из баранины", price: 770, shortDesc: "Наваристый бульон с нежной бараниной, картофелем и восточными специями" },
@@ -160,7 +175,7 @@ export const MENU: MenuCategory[] = [
   {
     id: "sides",
     title: "Гарниры",
-    emoji: "🥔",
+    emoji: "fries",
     items: [
       { name: "Картофель айдахо", price: 300, shortDesc: "Запечённые дольки картофеля с хрустящей корочкой и пряностями" },
       { name: "Картофель фри", price: 300, shortDesc: "Золотистый хрустящий картофель — классика, любимая всеми" },
@@ -171,7 +186,7 @@ export const MENU: MenuCategory[] = [
   {
     id: "sauces",
     title: "Соусы",
-    emoji: "🫙",
+    emoji: "sauce",
     items: [
       { name: "Сацебели", price: 120, shortDesc: "Пикантный томатный соус с грузинскими специями и кинзой" },
       { name: "Аджика", price: 120, shortDesc: "Жгучая паста из острого перца, чеснока и пряных трав" },

@@ -1,30 +1,28 @@
-/* Design Tokens — Rocket Bank 2026 Style */
+/* Design Tokens — Premium Dark · Georgian Red-Brown */
 
 export const colors = {
-  // Dark palette (primary)
-  ink: "#0C0604",
-  "ink-mid": "#1A0905",
-  "ink-soft": "#2C1206",
+  ink: "#EDE6E2",
+  "ink-mid": "#141010",
+  "ink-soft": "#9A8884",
 
-  // Light palette
-  cream: "#F5EDD6",
-  "cream-80": "rgba(245,237,214,0.8)",
-  "cream-50": "rgba(245,237,214,0.5)",
-  "cream-30": "rgba(245,237,214,0.3)",
+  cream: "#F4EBE7",
+  "cream-80": "rgba(244, 235, 231, 0.8)",
+  "cream-50": "rgba(244, 235, 231, 0.5)",
+  "cream-30": "rgba(244, 235, 231, 0.3)",
 
-  // Accent
-  gold: "#C4880A",
-  "gold-light": "#D4A93A",
-  "gold-bright": "#F0C040",
+  gold: "#C49A72",
+  "gold-light": "#D4AE88",
+  "gold-bright": "#E8CCA8",
 
-  // Red/Georgian
-  red: "#8B1818",
-  "red-dark": "#5C0E0E",
-  "red-bright": "#C41E1E",
+  wine: "#A45632",
+  "wine-dark": "#5C3018",
+  "wine-bright": "#C86E42",
 
-  // Utility
-  border: "rgba(245,237,214,0.08)",
-  "border-dark": "rgba(139,24,24,0.15)",
+  surface: "#080608",
+  "surface-raised": "#120A0E",
+
+  border: "rgba(244, 235, 231, 0.08)",
+  "border-wine": "rgba(164, 86, 50, 0.25)",
 } as const;
 
 export const typography = {
@@ -70,8 +68,8 @@ export const animation = {
 } as const;
 
 export const shadows = {
-  sm: "0 2px 8px rgba(0, 0, 0, 0.12)",
-  md: "0 4px 20px rgba(0, 0, 0, 0.2)",
-  lg: "0 12px 48px rgba(0, 0, 0, 0.35)",
-  xl: "0 20px 80px rgba(0, 0, 0, 0.5)",
+  sm: "0 2px 8px rgba(0, 0, 0, 0.25)",
+  md: "0 4px 20px rgba(0, 0, 0, 0.35)",
+  lg: "0 12px 48px rgba(0, 0, 0, 0.45)",
+  xl: "0 20px 80px rgba(0, 0, 0, 0.55)",
 } as const;

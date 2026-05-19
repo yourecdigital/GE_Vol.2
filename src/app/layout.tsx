@@ -22,12 +22,12 @@ const monoFont = IBM_Plex_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#FAF0DC",
-  colorScheme: "light",
+  themeColor: "#080608",
+  colorScheme: "dark",
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yourecdigital.github.io/dvizh/"),
+  metadataBase: new URL("https://yourecdigital.github.io/GE_Vol.2/"),
   title: "Доставка «Вкусно как в Грузии» — грузинская кухня с доставкой",
   description:
     "Премиум-доставка грузинской кухни: хинкали, хачапури, шашлыки на мангале, харчо. Готовим по традиционным рецептам. +7 (909) 577-75-80",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     description: "Премиум грузинская кухня с доставкой в ваш дом",
     locale: "ru_RU",
     type: "website",
-    url: "https://yourecdigital.github.io/dvizh/",
+    url: "https://yourecdigital.github.io/GE_Vol.2/",
   },
   robots: { index: true, follow: true },
 };

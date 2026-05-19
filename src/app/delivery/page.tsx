@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { DeliveryCards } from "@/components/delivery-cards";
 
 export const metadata: Metadata = {
   title: "Доставка — Доставка «Вкусно как в Грузии»",
@@ -17,22 +18,7 @@ export default function DeliveryPage() {
             <p className="text-ink/50 max-w-lg body-mono">Готовим на заказ и доставляем в лучшем виде. Быстро, горячо, вкусно.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-            {[
-              { icon: "⏱️", title: "30–45 минут", desc: "Среднее время доставки в пределах города" },
-              { icon: "💰", title: "От 250₽", desc: "Минимальный размер заказа для доставки" },
-              { icon: "📍", title: "Вся область", desc: "Доставляем во все районы и пригороды" },
-              { icon: "🔥", title: "Горячая еда", desc: "Упаковываем специально, чтобы сохранить тепло" },
-              { icon: "📱", title: "Online или звонок", desc: "Закажите через сайт или позвоните нам" },
-              { icon: "👨‍✍️", title: "Без вопросов", desc: "Если что-то не понравилось, вернём деньги" },
-            ].map((item) => (
-              <div key={item.title} className="menu-card">
-                <span className="text-3xl">{item.icon}</span>
-                <h3 className="text-ink font-bold leading-snug text-lg" style={{ fontFamily: "var(--font-heading)" }}>{item.title}</h3>
-                <p className="text-ink/40 text-sm body-mono">{item.desc}</p>
-              </div>
-            ))}
-          </div>
+          <DeliveryCards />
 
           <div className="menu-card p-8 sm:p-10">
             <h2 className="text-ink font-bold text-2xl mb-6" style={{ fontFamily: "var(--font-heading)" }}>Как заказать</h2>

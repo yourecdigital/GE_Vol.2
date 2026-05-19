@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export const dynamic = "force-static";
 
-const BASE = "https://yourecdigital.github.io/dvizh";
+const BASE = "https://yourecdigital.github.io/GE_Vol.2";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [

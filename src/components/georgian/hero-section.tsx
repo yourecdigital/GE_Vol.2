@@ -1,8 +1,10 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { CONTACT } from "@/lib/georgian-menu";
+import { CaucasusMountains } from "@/components/ui/caucasus-mountains";
 
 function Word({ children, delay = 0 }: { children: string; delay?: number }) {
   return (
@@ -26,17 +28,16 @@ export function HeroSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
   return (
-    <section ref={ref} className="bg-hero hero-with-header relative min-h-[100dvh] flex flex-col overflow-hidden">
-      {/* Decorative circles */}
+    <section ref={ref} className="bg-menu hero-with-header relative min-h-[100dvh] flex flex-col overflow-hidden pb-0">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-[15%] right-[10%] w-[300px] h-[300px] rounded-full opacity-20"
-          style={{ background: "radial-gradient(circle, #D4A93A, transparent 70%)" }} />
-        <div className="absolute bottom-[20%] left-[5%] w-[400px] h-[400px] rounded-full opacity-15"
-          style={{ background: "radial-gradient(circle, #E8C8B8, transparent 70%)" }} />
+        <div className="absolute top-[12%] right-[8%] w-[min(320px,55vw)] h-[min(320px,55vw)] rounded-full opacity-25"
+          style={{ background: "radial-gradient(circle, rgba(164, 86, 50, 0.35), transparent 68%)" }} />
+        <div className="absolute bottom-[28%] left-[4%] w-[min(420px,70vw)] h-[min(420px,70vw)] rounded-full opacity-20"
+          style={{ background: "radial-gradient(circle, rgba(196, 154, 114, 0.22), transparent 70%)" }} />
       </div>
 
       <motion.div style={{ y: contentY, opacity }}
-        className="relative z-10 flex flex-col flex-1 justify-center px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto w-full">
+        className="relative z-10 flex flex-col flex-1 justify-center px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto w-full pb-[min(28vh,200px)] sm:pb-[min(26vh,220px)]">
 
         <motion.div initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1, duration: 0.6 }}
@@ -63,7 +64,9 @@ export function HeroSection() {
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 0.65 }}
           className="mt-9 sm:mt-10 flex flex-wrap gap-4">
-          <a href="#menu" className="btn-primary px-8 py-4">Открыть меню <ArrowDown /></a>
+          <Link href="/menu" className="btn-primary px-8 py-4">
+            Открыть меню <ArrowDown />
+          </Link>
           <a href={`tel:${CONTACT.phoneRaw}`} className="btn-outline px-8 py-4"><PhoneIcon /> {CONTACT.phone}</a>
         </motion.div>
 
@@ -84,18 +87,18 @@ export function HeroSection() {
       </motion.div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }}
-        className="relative z-10 self-center mb-8 flex flex-col items-center gap-2">
+        className="relative z-20 self-center mb-2 flex flex-col items-center gap-2 pointer-events-none">
         <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
           className="w-px h-8 bg-gradient-to-b from-ink/30 to-transparent" />
       </motion.div>
 
-      {/* Wave divider */}
-      <div className="absolute bottom-0 left-0 right-0 z-20">
-        <svg viewBox="0 0 1440 80" fill="none" preserveAspectRatio="none" className="w-full h-[60px] sm:h-[80px]">
-          <path d="M0 40C240 70 480 10 720 40C960 70 1200 10 1440 40V80H0Z" fill="#D4A93A" fillOpacity="0.15"/>
-          <path d="M0 50C360 80 720 20 1080 50C1260 65 1380 45 1440 50V80H0Z" fill="#E8C8B8"/>
-        </svg>
-      </div>
+      <CaucasusMountains
+        scrollRef={ref}
+        groundColor="#100e0c"
+        heroBg="#100e0c"
+        className="absolute inset-x-0 bottom-0 z-[5]"
+        heightClassName="h-[min(58vh,520px)] sm:h-[min(54vh,560px)] md:h-[min(50vh,580px)]"
+      />
     </section>
   );
 }

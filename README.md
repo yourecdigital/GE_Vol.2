@@ -1,4 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Доставка «Вкусно как в Грузии»
+
+Статический сайт на Next.js: меню, корзина, доставка, контакты.
+
+## Сайт онлайн (GitHub Pages)
+
+**https://yourecdigital.github.io/dvizh/**
+
+| Страница | Ссылка |
+|----------|--------|
+| Главная | https://yourecdigital.github.io/dvizh/ |
+| Меню | https://yourecdigital.github.io/dvizh/menu/ |
+| Доставка | https://yourecdigital.github.io/dvizh/delivery/ |
+| О нас | https://yourecdigital.github.io/dvizh/about/ |
+| Контакты | https://yourecdigital.github.io/dvizh/contacts/ |
+
+Репозиторий: https://github.com/yourecdigital/dvizh
+
+## Локальная разработка
+
+```bash
+npm install
+npm run dev
+```
+
+Откройте http://localhost:3022
+
+## Статическая сборка (как на GitHub)
+
+```bash
+npm run build
+# env: SKIP_VERIFY_EXPORT=1 BASE_PATH=/dvizh
+npm run start
+```
+
+Папка `out/` — готовый статический сайт для любого хостинга.
 
 ## Getting Started
 

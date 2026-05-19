@@ -1,4 +1,4 @@
-name: Deploy «Вкусно как в Грузии» to GitHub Pages
+name: Deploy «Вкусно как в Грузии» V3 to GitHub Pages
 
 on:
   push:
@@ -25,14 +25,20 @@ jobs:
         with:
           node-version: 20
           cache: npm
-
-      - name: Install dependencies
-        run: npm ci
+          cache-dependency-path: V3/package-lock.json
 
       - name: Sync Telegram animated emojis
-        run: npm run telegram-emojis
+        run: node scripts/sync-telegram-emojis.mjs
 
-      - name: Build static site
+      - name: Link public assets into V3
+        run: cp -r public V3/public
+
+      - name: Install V3 dependencies
+        working-directory: V3
+        run: npm ci
+
+      - name: Build V3 static site
+        working-directory: V3
         run: npm run build
         env:
           SKIP_VERIFY_EXPORT: "1"
@@ -41,7 +47,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: V3/out
 
   deploy:
     needs: build

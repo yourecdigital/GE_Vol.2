@@ -19,6 +19,12 @@
 /.next/
 /out/
 
+# V3 build artifacts
+/V3/node_modules/
+/V3/.next/
+/V3/out/
+/V3/public/
+
 # static deploy bundle (upload to hosting as-is)
 /site-static.zip
 

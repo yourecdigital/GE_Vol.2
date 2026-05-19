@@ -3,6 +3,7 @@
 
 /* ─────────────────────────────────────────
    DESIGN SYSTEM — Premium Dark · Georgian Red-Brown
+   V3: text-desc class (readable, no forced uppercase)
    ───────────────────────────────────────── */
 
 @theme inline {
@@ -107,6 +108,16 @@
   text-transform: uppercase;
 }
 
+/* V3 FIX: text-desc — readable descriptions without forced uppercase */
+.text-desc {
+  font-family: var(--font-mono), "IBM Plex Mono", monospace;
+  font-size: 0.85rem;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  line-height: 1.65;
+}
+
+/* Legacy: body-mono with UPPERCASE (kept for backwards compat, prefer text-desc) */
 .body-mono {
   font-family: var(--font-mono), "IBM Plex Mono", monospace;
   font-size: 0.85rem;
@@ -446,8 +457,8 @@
   font-family: var(--font-mono), "IBM Plex Mono", monospace;
   font-size: 0.78rem;
   line-height: 1.65;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-transform: none;
   color: rgba(237, 230, 226, 0.48);
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -615,8 +626,8 @@
   font-family: var(--font-mono), "IBM Plex Mono", monospace;
   font-size: 0.82rem;
   line-height: 1.75;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-transform: none;
   color: rgba(237, 230, 226, 0.55);
   margin-bottom: 1.25rem;
 }
@@ -711,7 +722,6 @@
     box-shadow 0.4s ease;
 }
 
-/* На телефоне и планшете шапка всегда плотная — контент не просвечивает */
 @media (max-width: 1023px) {
   .site-header {
     backdrop-filter: blur(20px) saturate(1.4);
@@ -1111,7 +1121,6 @@
 /* ─────────────────────────────────────────
    SECTION BACKGROUNDS
    ───────────────────────────────────────── */
-/* Home-page flow — removes gaps between full-bleed sections */
 .home-flow > section + section,
 .home-flow > section + div + section,
 .home-flow > div.relative + section {
@@ -1144,7 +1153,7 @@
 }
 
 /* ─────────────────────────────────────────
-   CAUCASUS — слои + parallax, плавные края (без стыка)
+   CAUCASUS — layers + parallax
    ───────────────────────────────────────── */
 .caucasus-mountains {
   position: relative;
@@ -1189,17 +1198,9 @@
   will-change: transform;
 }
 
-.caucasus-layer--far {
-  z-index: 1;
-}
-
-.caucasus-layer--mid {
-  z-index: 2;
-}
-
-.caucasus-layer--near {
-  z-index: 3;
-}
+.caucasus-layer--far  { z-index: 1; }
+.caucasus-layer--mid  { z-index: 2; }
+.caucasus-layer--near { z-index: 3; }
 
 .caucasus-layer__img {
   display: block;

@@ -3,7 +3,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart, updateQty, removeFromCart, clearCart } from "@/lib/cart-store";
 import { CONTACT } from "@/lib/georgian-menu";
-import { TelegramEmoji } from "@/components/telegram-emoji";
+import { TelegramEmoji } from "@/components/ui/telegram-emoji";
+import { PhoneIcon, VkIcon, OrderIcon, CartIcon, CloseIcon, TrashIcon } from "@/components/ui/icons";
 
 export function CartDrawer({
   open,
@@ -15,19 +16,12 @@ export function CartDrawer({
   onOrder: () => void;
 }) {
   const { items, total, count } = useCart();
-
-  const orderText = items
-    .map((i) => `${i.name} × ${i.qty} = ${(i.price * i.qty).toLocaleString("ru-RU")}₽`)
-    .join("\n");
-  const fullText = `Здравствуйте! Хочу заказать:\n\n${orderText}\n\nИтого: ${total.toLocaleString("ru-RU")}₽`;
-  const vkLink = `${CONTACT.vk}?w=wall&msg=${encodeURIComponent(fullText)}`;
   const phoneLink = `tel:${CONTACT.phoneRaw}`;
 
   return (
     <AnimatePresence>
       {open && (
         <>
-          {/* Backdrop */}
           <motion.div
             key="backdrop"
             initial={{ opacity: 0 }}
@@ -37,7 +31,6 @@ export function CartDrawer({
             className="fixed inset-0 z-[60] bg-black/70"
           />
 
-          {/* Drawer */}
           <motion.div
             key="drawer"
             initial={{ x: "100%" }}
@@ -45,23 +38,21 @@ export function CartDrawer({
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className="fixed top-0 right-0 bottom-0 z-[70] w-full max-w-md cart-drawer bg-ink-mid flex flex-col"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Корзина"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-cream/[0.06]">
               <div className="flex items-center gap-3">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gold">
-                  <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                  <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
-                </svg>
+                <CartIcon size={22} className="text-gold" />
                 <h2 className="text-cream font-bold text-lg" style={{ fontFamily: "var(--font-heading)" }}>
                   Корзина
                 </h2>
                 <span className="label-caps text-cream/30">{count} шт</span>
               </div>
-              <button onClick={onClose} className="text-cream/40 hover:text-cream transition-colors p-1">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M18 6L6 18M6 6l12 12"/>
-                </svg>
+              <button onClick={onClose} className="text-cream/40 hover:text-cream transition-colors p-1" aria-label="Закрыть корзину">
+                <CloseIcon size={24} />
               </button>
             </div>
 
@@ -84,17 +75,16 @@ export function CartDrawer({
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <button className="qty-btn" onClick={() => updateQty(item.id, item.qty - 1)}>−</button>
+                      <button className="qty-btn" onClick={() => updateQty(item.id, item.qty - 1)} aria-label="Уменьшить">−</button>
                       <span className="text-cream text-sm font-bold w-6 text-center">{item.qty}</span>
-                      <button className="qty-btn" onClick={() => updateQty(item.id, item.qty + 1)}>+</button>
+                      <button className="qty-btn" onClick={() => updateQty(item.id, item.qty + 1)} aria-label="Увеличить">+</button>
                     </div>
                     <button
                       onClick={() => removeFromCart(item.id)}
                       className="text-cream/20 hover:text-wine transition-colors p-1"
+                      aria-label={`Удалить ${item.name}`}
                     >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
-                      </svg>
+                      <TrashIcon />
                     </button>
                   </div>
                 ))
@@ -136,30 +126,5 @@ export function CartDrawer({
         </>
       )}
     </AnimatePresence>
-  );
-}
-
-function OrderIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M9 11l3 3L22 4"/>
-      <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
-    </svg>
-  );
-}
-
-function PhoneIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
-    </svg>
-  );
-}
-
-function VkIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14C20.67 22 22 20.67 22 15.07V8.93C22 3.33 20.67 2 15.07 2zm3.08 13.75h-1.54c-.58 0-.76-.47-1.8-1.52-.9-.88-1.3-.99-1.52-.99-.31 0-.4.09-.4.52v1.39c0 .37-.12.59-1.1.59-1.62 0-3.42-.98-4.68-2.8C5.57 11.15 5 9.33 5 8.93c0-.22.09-.43.52-.43h1.54c.39 0 .54.18.69.6.76 2.2 2.03 4.12 2.55 4.12.2 0 .29-.09.29-.58V10.4c-.06-1.04-.61-1.13-.61-1.5 0-.18.15-.36.39-.36h2.42c.33 0 .45.18.45.57v3.06c0 .33.15.45.24.45.2 0 .36-.12.72-.49 1.11-1.24 1.9-3.15 1.9-3.15.1-.22.29-.43.68-.43h1.54c.46 0 .56.24.46.57-.19.88-2.05 3.51-2.05 3.51-.16.26-.22.37 0 .66.16.22.68.67 1.03 1.08.64.73 1.13 1.34 1.26 1.76.13.42-.09.64-.52.64z"/>
-    </svg>
   );
 }

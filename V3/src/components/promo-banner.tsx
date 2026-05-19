@@ -1,0 +1,72 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { PROMO, CONTACT } from "@/lib/georgian-menu";
+import { TelegramEmoji } from "@/components/ui/telegram-emoji";
+import { PhoneIcon, CalendarIcon } from "@/components/ui/icons";
+
+export function PromoBanner() {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  return (
+    <section id="promo" ref={ref} className="bg-menu home-promo relative overflow-hidden pt-8 sm:pt-12 pb-20 sm:pb-28 px-6 sm:px-10">
+      <div className="pointer-events-none absolute inset-0"
+        style={{ background: "radial-gradient(ellipse 50% 80% at 50% 50%, rgba(164, 86, 50, 0.2), transparent 70%)" }} />
+
+      <div className="relative z-10 max-w-5xl mx-auto flex flex-col lg:flex-row items-center lg:items-start gap-10 lg:gap-16">
+        <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 bg-wine/80 text-cream label-caps px-5 py-2 rounded-full mb-7">
+            <TelegramEmoji name="party" size={24} />
+            <span>{PROMO.title}</span>
+          </motion.div>
+
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.12, duration: 0.65 }}
+            className="text-ink/50 mb-3 text-desc">
+            {PROMO.condition} —
+          </motion.p>
+
+          <motion.div initial={{ opacity: 0, scale: 0.94 }} animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ delay: 0.24, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}>
+            <h2 className="text-gold-shimmer display-section leading-[1.0] mb-6">
+              Хачапури<br />по-Аджарски<br />
+              <span className="text-ink">— ПОДАРОК!</span>
+            </h2>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 0.4 }}
+            className="flex items-center gap-2 text-ink/35 mb-8 label-caps">
+            <CalendarIcon />
+            <span>Акция: {PROMO.dateFrom} — {PROMO.dateTo}</span>
+          </motion.div>
+
+          <motion.a href={`tel:${CONTACT.phoneRaw}`}
+            initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.52, duration: 0.55 }}
+            whileHover={{ scale: 1.04, y: -3 }} whileTap={{ scale: 0.97 }}
+            className="btn-wine px-10 py-4">
+            <PhoneIcon /> Успеть заказать!
+          </motion.a>
+        </div>
+
+        <motion.div initial={{ opacity: 0, x: 40 }} animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="flex-shrink-0 w-full lg:w-72 xl:w-80">
+          <div className="menu-card-light rounded-2xl p-8 flex flex-col items-center text-center gap-5">
+            <div className="text-5xl spin-slow opacity-40 text-gold select-none" style={{ fontFamily: "var(--font-heading)" }}>✦</div>
+            <p className="label-caps text-wine/60">Абсолютно бесплатно</p>
+            <TelegramEmoji name="gift" size={56} />
+            <p className="text-ink font-bold leading-snug" style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(1.2rem,2.5vw,1.6rem)" }}>
+              Хачапури<br />по-Аджарски
+            </p>
+            <p className="text-ink/35 text-sm text-desc">Успей порадовать себя!</p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

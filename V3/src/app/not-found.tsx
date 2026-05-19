@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "404 — Страница не найдена | Вкусно как в Грузии",
+  title: "404 — Страница не найдена",
 };
 
 export default function NotFound() {
@@ -18,7 +18,7 @@ export default function NotFound() {
         <span className="text-gold-shimmer">заблудился!</span>
       </h1>
 
-      <p className="body-mono text-ink/45 max-w-md mb-10">
+      <p className="text-desc text-ink/45 max-w-md mb-10">
         Этой страницы нет. Может, она была — а может, и не&nbsp;было.
         Зато у&nbsp;нас есть хинкали.
       </p>

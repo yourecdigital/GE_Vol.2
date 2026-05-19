@@ -23,21 +23,39 @@ const monoFont = IBM_Plex_Mono({
 });
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
   themeColor: "#080608",
   colorScheme: "dark",
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://yourecdigital.github.io/GE_Vol.2/"),
-  title: "Доставка «Вкусно как в Грузии» — грузинская кухня с доставкой",
+  title: {
+    default: "Доставка «Вкусно как в Грузии» — грузинская кухня с доставкой",
+    template: "%s | Вкусно как в Грузии",
+  },
   description:
     "Премиум-доставка грузинской кухни: хинкали, хачапури, шашлыки на мангале, харчо. Готовим по традиционным рецептам. +7 (909) 577-75-80",
-  keywords: ["доставка грузинской кухни", "хинкали", "хачапури", "шашлык", "харчо", "грузинский ресторан"],
+  keywords: [
+    "доставка грузинской кухни",
+    "хинкали доставка",
+    "хачапури доставка",
+    "шашлык доставка",
+    "харчо",
+    "грузинский ресторан",
+    "кавказская кухня",
+    "доставка еды",
+  ],
+  alternates: {
+    canonical: "https://yourecdigital.github.io/GE_Vol.2/",
+  },
   openGraph: {
-    title: "«Вкусно как в Грузии» — доставка",
-    description: "Премиум грузинская кухня с доставкой в ваш дом",
+    title: "«Вкусно как в Грузии» — доставка грузинской кухни",
+    description: "Хинкали, хачапури, шашлыки на мангале — доставляем горячим",
     locale: "ru_RU",
     type: "website",
+    siteName: "Вкусно как в Грузии",
     url: "https://yourecdigital.github.io/GE_Vol.2/",
     images: [
       {

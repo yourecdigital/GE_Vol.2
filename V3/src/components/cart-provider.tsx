@@ -15,7 +15,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const openOrder = useCallback(() => {
     setDrawerOpen(false);
-    // Small delay so the drawer exits before modal enters
     setTimeout(() => setOrderOpen(true), 200);
   }, []);
 

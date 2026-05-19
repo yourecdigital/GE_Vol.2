@@ -5,10 +5,11 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { CONTACT } from "@/lib/georgian-menu";
 import { CaucasusMountains } from "@/components/ui/caucasus-mountains";
+import { ArrowDownIcon, PhoneIcon } from "@/components/ui/icons";
 
 function Word({ children, delay = 0 }: { children: string; delay?: number }) {
   return (
-    <div style={{ overflow: "hidden", display: "inline-block" }}>
+    <span style={{ overflow: "hidden", display: "inline-block" }}>
       <motion.span
         style={{ display: "inline-block" }}
         initial={{ y: "105%", opacity: 0 }}
@@ -17,7 +18,7 @@ function Word({ children, delay = 0 }: { children: string; delay?: number }) {
       >
         {children}
       </motion.span>
-    </div>
+    </span>
   );
 }
 
@@ -29,7 +30,7 @@ export function HeroSection() {
 
   return (
     <section ref={ref} className="bg-menu hero-with-header relative min-h-[100dvh] flex flex-col overflow-x-clip overflow-y-hidden pb-0">
-      <div className="pointer-events-none absolute inset-0">
+      <div className="pointer-events-none absolute inset-0" aria-hidden>
         <div className="absolute top-[12%] right-[8%] w-[min(320px,55vw)] h-[min(320px,55vw)] rounded-full opacity-25"
           style={{ background: "radial-gradient(circle, rgba(164, 86, 50, 0.35), transparent 68%)" }} />
         <div className="absolute bottom-[28%] left-[4%] w-[min(420px,70vw)] h-[min(420px,70vw)] rounded-full opacity-20"
@@ -42,7 +43,7 @@ export function HeroSection() {
         <motion.div initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1, duration: 0.6 }}
           className="mb-6 sm:mb-8 flex items-center gap-3">
-          <span className="w-8 h-px bg-gold/40" />
+          <span className="w-8 h-px bg-gold/40" aria-hidden />
           <span className="label-caps text-ink/50">настоящая грузинская кухня</span>
         </motion.div>
 
@@ -56,18 +57,20 @@ export function HeroSection() {
 
         <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.75, duration: 0.7 }}
-          className="mt-7 sm:mt-9 text-ink/50 max-w-lg body-mono">
-          Хинкали, хачапури, шашлыки на мангале и харчо по&nbsp;традиционным
-          рецептам — доставляем горячим прямо к&nbsp;вашему столу.
+          className="mt-7 sm:mt-9 text-ink/50 max-w-lg text-desc">
+          Хинкали, хачапури, шашлыки на мангале и харчо по{" "}традиционным
+          рецептам — доставляем горячим прямо к{" "}вашему столу.
         </motion.p>
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 0.65 }}
           className="mt-9 sm:mt-10 flex flex-wrap gap-4">
           <Link href="/menu" className="btn-primary px-8 py-4">
-            Открыть меню <ArrowDown />
+            Открыть меню <ArrowDownIcon />
           </Link>
-          <a href={`tel:${CONTACT.phoneRaw}`} className="btn-outline px-8 py-4"><PhoneIcon /> {CONTACT.phone}</a>
+          <a href={`tel:${CONTACT.phoneRaw}`} className="btn-outline px-8 py-4">
+            <PhoneIcon /> {CONTACT.phone}
+          </a>
         </motion.div>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
@@ -86,12 +89,6 @@ export function HeroSection() {
         </motion.div>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }}
-        className="relative z-20 self-center mb-2 flex flex-col items-center gap-2 pointer-events-none">
-        <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          className="w-px h-8 bg-gradient-to-b from-ink/30 to-transparent" />
-      </motion.div>
-
       <CaucasusMountains
         scrollRef={ref}
         groundColor="#100e0c"
@@ -102,6 +99,3 @@ export function HeroSection() {
     </section>
   );
 }
-
-function ArrowDown() { return <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>; }
-function PhoneIcon() { return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>; }
